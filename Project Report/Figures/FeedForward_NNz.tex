@@ -1,0 +1,199 @@
+
+\tikzset{dist1/.style={path picture= {
+    \begin{scope}[x=1pt,y=10pt]
+      \draw plot[domain=-6:6] (\x,{1/(1 + exp(-\x))-0.5});
+    \end{scope}
+    }
+  }
+}
+\tikzset{dist2/.style={path picture= {
+    \begin{scope}[x=1pt,y=10pt]
+      \draw plot[domain=-6:6] (\x,{\x/10});
+    \end{scope}
+    }
+  }
+}
+\tikzstyle{input}=[draw,fill=red!10,circle,minimum size=15pt,inner sep=0pt]
+\tikzstyle{hidden}=[draw,fill=green!20,circle,minimum size=15pt,inner sep=0pt]
+\tikzstyle{output}=[draw,fill=blue!20,circle,minimum size=15pt,inner sep=0pt]
+\tikzstyle{bias}=[draw=none,circle,minimum size=15pt,inner sep=0pt]
+
+
+\tikzstyle{stateTransition}=[->,line width=0.25pt,draw=black!50]
+
+
+\begin{tikzpicture}[scale=1.36]\scriptsize
+    \node (x1)[input]   at (0, 1.25) {$x_{1}$};
+    \node (x2)[input] at (0, 0.25) {$x_{2}$};
+    \node (x3)  at (0,-0.5) {\raisebox{6pt}{\vdots}};
+    \node (xx)[input]  at (0,-1.25) {$x_{\mathtt{X}}$};
+
+    \node (b0)[bias]  at (0.35,1.9) {$\bm{b}^{(0)}$};
+
+
+    \node (h11)[hidden] at (1, 1.5) {$z^{(1)}_{1}$};
+    \node (h12)[hidden] at (1, 0.5) {$z^{(1)}_{2}$};
+    \node (h13) at (1,-0.5) {\raisebox{5pt}{$\vdots$}};
+    \node (h14)[hidden] at (1,-1.5) {$z^{(1)}_{\mathtt{A}}$};
+    \node (b1)[bias]  at (1.35,1.9) {$\bm{b}^{(1)}$};
+
+    \node (h21)[hidden] at (2, 1.5) {$z^{(2)}_{1}$};
+    \node (h22)[hidden] at (2, 0.5) {$z^{(2)}_{2}$};
+    \node (h23) at (2,-0.5) {\raisebox{6pt}{\vdots}};
+    \node (h24)[hidden] at (2,-1.5) {$z^{(2)}_{\mathtt{A}}$};
+    \node (b2)[bias]  at (2.35,1.9) {$\bm{b}^{(\cdots)}$};
+    
+    \node (h31) at (3, 1.5) {$\cdots$};
+    \node (h32) at (3, 0.5) {$\cdots$};
+    \node (h33) at (3,-0.5) {\raisebox{6pt}{\vdots}};
+    \node (h34) at (3,-1.5) {$\cdots$};
+    \node (b3)[bias]  at (3.35,1.9) {$\bm{b}^{(\mathtt{L}-1)}$};
+    
+    \node (h41)[hidden] at (4, 1.5) {$z^{(\mathtt{L})}_{1}$};
+    \node (h42)[hidden] at (4, 0.5) {$z^{(\mathtt{L})}_{2}$};
+    \node (h43) at (4,-0.5) {\raisebox{6pt}{\vdots}};
+    \node (h44)[hidden] at (4,-1.5) {$z^{(\mathtt{L})}_{\mathtt{A}}$};
+    \node (b4)[bias]  at (4.35,1.9) {$\bm{b}^{(\mathtt{L})}$};
+
+    \node (h1)[hidden] at (5.1,1.25) {$z_{1}^{(\mathtt{O})}$};
+    \node (h2)[hidden] at (5.1,0.25) {$z_{2}^{(\mathtt{O})}$};
+    \node (hn) at (5.1,-0.5) {\raisebox{6pt}{\vdots}};
+    \node (h3)[hidden] at (5.1,-1.25) {$z_{\mathtt{Y}}^{(\mathtt{O})}$};
+    \node (o1)[output] at (5.7,1.25) {$y_{1}$};
+    \node (o2)[output] at (5.7,0.25) {$y_{2}$};
+    \node (on) at (5.7,-0.5) {\raisebox{6pt}{\vdots}};
+    \node (o3)[output] at (5.7,-1.25) {$y_{\mathtt{Y}}$};
+    
+
+    \draw[stateTransition] (x1) -- (h11) node  {};
+    \draw[stateTransition] (x1) -- (h12) node  {};
+    \draw[stateTransition] (x1) -- (h13) node  {};
+    \draw[stateTransition] (x1) -- (h14) node  {};
+    \draw[stateTransition] (x2) -- (h11) node  {};
+    \draw[stateTransition] (x2) -- (h12) node  {};
+    \draw[stateTransition] (x2) -- (h13) node  {};
+    \draw[stateTransition] (x2) -- (h14) node  {};
+    \draw[stateTransition] (x3) -- (h11) node  {};
+    \draw[stateTransition] (x3) -- (h12) node  {};
+    \draw[stateTransition] (x3) -- (h13) node  {};
+    \draw[stateTransition] (x3) -- (h11) node  {};
+    \draw[stateTransition] (xx) -- (h11) node  {};
+    \draw[stateTransition] (xx) -- (h12) node  {};
+    \draw[stateTransition] (xx) -- (h13) node  {};
+    \draw[stateTransition] (xx) -- (h11) node  {};
+     \draw[stateTransition] (xx) -- (h14) node  {};
+    
+    \draw[stateTransition] (b0) -- (h12) node {};
+    \draw[stateTransition] (b0) -- (h11) node {};
+    \draw[stateTransition] (b0) -- (h13) node {};
+    \draw[stateTransition] (b0) -- (h14) node {};
+
+    \draw[stateTransition,opacity=1] (h11) -- (h21) node [midway, rotate=0,fill=white,opacity=0.8] {\scriptsize$w^{(1)}_{1,1}$};
+    \draw[stateTransition,opacity=0] (h11) -- (h21) node [midway, rotate=0,fill=white] {\scriptsize$w^{(1)}_{1,1}$};
+    \draw[stateTransition,opacity=0.2] (h11) -- (h22) node  {};
+    \draw[stateTransition,opacity=0.2] (h11) -- (h23) node  {};
+    \draw[stateTransition,opacity=0.2] (h11) -- (h24) node  {};
+    \draw[stateTransition,opacity=1] (h12) -- (h21) node [midway, rotate=45,fill=white,opacity=0.8] {\scriptsize$w^{(1)}_{1,2}$};
+        \draw[stateTransition,opacity=0] (h12) -- (h21) node [midway, rotate=45,fill=white!90] {\scriptsize$w^{(1)}_{2,1}$};
+    \draw[stateTransition,opacity=0.2] (h12) -- (h22) node  {};
+    \draw[stateTransition,opacity=0.2] (h12) -- (h23) node  {};
+    \draw[stateTransition,opacity=0.2] (h12) -- (h24) node  {};
+    %\draw[stateTransition,opacity=0.2] (h13) -- (h21) node  {};
+        \draw[stateTransition,opacity=1] (h13) -- (h21) node [midway, rotate=60,fill=white,opacity=0.8] {\scriptsize$w^{(1)}_{1,i}$};
+     \draw[stateTransition,opacity=0] (h13) -- (h21) node [midway, rotate=60] {\scriptsize$w^{(1)}_{i,1}$};
+    \draw[stateTransition,opacity=0.2] (h13) -- (h22) node  {};
+    \draw[stateTransition,opacity=0.2] (h13) -- (h23) node  {};
+    \draw[stateTransition,opacity=0.2] (h13) -- (h24) node  {};
+    \draw[stateTransition,opacity=1] (h14) -- (h21) node [midway, rotate=70,fill=white,opacity=0.8] {\scriptsize$w^{(1)}_{1,\mathtt{A}}$};
+     \draw[stateTransition,opacity=0] (h14) -- (h21) node [midway, rotate=70] {\scriptsize$w^{(1)}_{\mathtt{A},1}$};
+    \draw[stateTransition,opacity=0.2] (h14) -- (h22) node  {};
+    \draw[stateTransition,opacity=0.2] (h14) -- (h23) node  {};
+    \draw[stateTransition,opacity=0.2] (h14) -- (h24) node  {};
+
+    
+    \draw[stateTransition,opacity=1] (b1) -- (h21) node  [midway,above=-0.05cm, rotate=-25] {\scriptsize$b^{(1)}_{1}$};
+    \draw[stateTransition,opacity=0.2] (b1) -- (h22) node {};
+    \draw[stateTransition,opacity=0.2] (b1) -- (h23) node {};
+    \draw[stateTransition,opacity=0.2] (b1) -- (h24) node {};
+    
+     \draw[stateTransition] (h21) -- (h31) node  {};
+    \draw[stateTransition] (h21) -- (h32) node  {};
+    \draw[stateTransition] (h21) -- (h33) node  {};
+    \draw[stateTransition] (h21) -- (h34) node  {};
+    \draw[stateTransition] (h22) -- (h31) node  {};
+    \draw[stateTransition] (h22) -- (h32) node  {};
+    \draw[stateTransition] (h22) -- (h33) node  {};
+    \draw[stateTransition] (h22) -- (h34) node  {};
+    \draw[stateTransition] (h23) -- (h31) node  {};
+    \draw[stateTransition] (h23) -- (h32) node  {};
+    \draw[stateTransition] (h23) -- (h33) node  {};
+    \draw[stateTransition] (h23) -- (h34) node  {};
+    \draw[stateTransition] (h24) -- (h31) node  {};
+    \draw[stateTransition] (h24) -- (h32) node  {};
+    \draw[stateTransition] (h24) -- (h33) node  {};
+    \draw[stateTransition] (h24) -- (h31) node  {};
+    \draw[stateTransition] (h24) -- (h34) node  {};
+
+    
+    \draw[stateTransition] (b2) -- (h32) node {};
+    \draw[stateTransition] (b2) -- (h31) node {};
+    \draw[stateTransition] (b2) -- (h33) node {};
+    \draw[stateTransition] (b2) -- (h34) node {};
+    
+    \draw[stateTransition] (h31) -- (h41) node  {};
+    \draw[stateTransition] (h31) -- (h42) node  {};
+    \draw[stateTransition] (h31) -- (h43) node  {};
+    \draw[stateTransition] (h31) -- (h44) node  {};
+    \draw[stateTransition] (h32) -- (h41) node  {};
+    \draw[stateTransition] (h32) -- (h42) node  {};
+    \draw[stateTransition] (h32) -- (h43) node  {};
+    \draw[stateTransition] (h32) -- (h44) node  {};
+    \draw[stateTransition] (h33) -- (h41) node  {};
+    \draw[stateTransition] (h33) -- (h42) node  {};
+    \draw[stateTransition] (h33) -- (h43) node  {};
+    \draw[stateTransition] (h33) -- (h44) node  {};
+    \draw[stateTransition] (h34) -- (h41) node  {};
+    \draw[stateTransition] (h34) -- (h42) node  {};
+    \draw[stateTransition] (h34) -- (h43) node  {};
+    \draw[stateTransition] (h34) -- (h41) node  {};
+     \draw[stateTransition] (h34) -- (h44) node  {};
+    
+    \draw[stateTransition] (b3) -- (h42) node {};
+    \draw[stateTransition] (b3) -- (h41) node {};
+    \draw[stateTransition] (b3) -- (h43) node {};
+    \draw[stateTransition] (b3) -- (h44) node {};
+    
+    
+    \draw[stateTransition] (h41) -- (h1) node  {};
+    \draw[stateTransition] (h42) -- (h1) node  {};
+    \draw[stateTransition] (h43) -- (h1) node  {};
+    \draw[stateTransition] (h44) -- (h1) node  {};
+    \draw[stateTransition] (b4) -- (h1) node {};
+    
+    \draw[stateTransition] (h41) -- (h2) node  {};
+    \draw[stateTransition] (h42) -- (h2) node  {};
+    \draw[stateTransition] (h43) -- (h2) node  {};
+    \draw[stateTransition] (h44) -- (h2) node  {};
+    \draw[stateTransition] (b4) -- (h2) node {};
+    
+    \draw[stateTransition] (h41) -- (hn) node  {};
+    \draw[stateTransition] (h42) -- (hn) node  {};
+    \draw[stateTransition] (h43) -- (hn) node  {};
+    \draw[stateTransition] (h44) -- (hn) node  {};
+    \draw[stateTransition] (b4) -- (hn) node {};
+    
+    \draw[stateTransition] (h41) -- (h3) node  {};
+    \draw[stateTransition] (h42) -- (h3) node  {};
+    \draw[stateTransition] (h43) -- (h3) node  {};
+    \draw[stateTransition] (h44) -- (h3) node  {};
+    \draw[stateTransition] (b4) -- (h3) node {};
+    
+     \draw[stateTransition] (h1) -- (o1) node  {};
+     \draw[stateTransition] (h2) -- (o2) node  {};
+     \draw[stateTransition] (hn) -- (on) node  {};
+     \draw[stateTransition] (h3) -- (o3) node  {};
+     
+     \node (h12)[hidden] at (1, 0.5) {$z^{(1)}_{2}$};
+     \node (h22)[hidden] at (2, 0.5) {$z^{(2)}_{2}$};
+
+\end{tikzpicture}

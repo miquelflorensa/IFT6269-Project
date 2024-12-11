@@ -353,7 +353,7 @@ train_Y, test_Y = Y[:train_size], Y[train_size:]
 plt.scatter(train_X, train_Y, marker="o", color="b")
 
 # Train
-net = TAGI([1, 50, 1])  # define model
+net = TAGI([1, 10, 1])  # define model
 train_X = net.standardize_data(train_X)
 train_Y = net.standardize_data(train_Y)
 

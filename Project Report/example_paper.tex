@@ -8,6 +8,13 @@
 \usepackage{subfigure}
 \usepackage{booktabs} % for professional tables
 
+% added packages david
+\usepackage{amsmath, amssymb}
+\usepackage{bm}
+\usepackage{subfigure}
+\usepackage{tikz}
+
+
 % hyperref makes hyperlinks in the resulting PDF.
 % If your build breaks (sometimes temporarily if a hyperlink spans a page)
 % please comment out the following usepackage line and replace
@@ -95,6 +102,93 @@ This document provides a basic paper template and submission guidelines.
 Abstracts must be a single paragraph, ideally between 4--6 sentences long.
 Gross violations will trigger corrections at the camera-ready phase.
 \end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+\section{Related Work}\label{sec:related_work}
+\subsection{Backprop}\label{sub:backprop}
+
+\subsection{BNNs}\label{sub:nn}
+
+\subsection{Tractable approximate gaussian inference (TAGI)}\label{sub:tagi}
+Goulet et al. \cite{goulet2020tractable} proposed the Tractable Approximate Gaussian Inference (TAGI) method, which is a Bayesian approach to neural networks. Compared to traditional NNs, this method allows to (1) optimize parameters analytically, (2) treat uncertainties from input to output layers and provide density forecasts. \\
+Consider a fully connected NN presented in Figure \ref{fig:FNN},
+the formulations of a TAGI-NN, which is similar to that of a traditional NN except that parameters and variables are assumed to be normally distributed, are defined by the following deterministic equations:
+\begin{equation*} \label{eq:TAGI}
+\begin{split}
+    \bm{z}^{(1)} &= \bm{w}^{(0)} \bm{x} + \bm{b}^{(0)}, \\
+    \bm{a}^{(i)} &= \tilde{\sigma}(\bm{z}^{(i)}) \; \; \;(i=1:\mathtt{L}), \\
+    \bm{z}^{(i)} &= \bm{w}^{(i)} \bm{a}^{(i-1)} + \bm{b}^{(i)} \; \; \;(i=2:\mathtt{L}), \\
+    \bm{z}^{(\mathtt{O})} &=  \bm{w}^{(\mathtt{L})} \bm{a}^{(\mathtt{L})} + \bm{w}^{(\mathtt{L})} \\
+    \bm{y} &=  \bm{z}^{(\mathtt{O})} + \bm{v}.
+\end{split}
+\end{equation*}
+where $\bm{w},\bm{b}$ are parameters, $\mathtt{L}$ is the number of hidden layers, $\bm{v}$ are the observation noise, $\bm{z}$ are hidden units, $\bm{y}$ are outputs, and $\tilde{\sigma}(\cdot)$ is the linearized activation function.
+\begin{figure}[htbp]
+\centering
+\subfigure[]{\resizebox{0.9\linewidth}{!}{\input{Figures/FeedForward_NNz}}}\\
+\subfigure[]{\resizebox{0.9
+\linewidth}{!}{\input{Figures/FeedForward_NN_compact}}}
+\caption{(a) A neural network representation. (b) A compacted NN representation, reproduced from \cite{goulet2020tractable}.}
+\label{fig:FNN}
+\end{figure}
+
+In Equation \ref{eq:TAGI}, the product of two Gaussian random variables is not Gaussian, despite of this, the authors proposed using the \textit{Gaussian Multiplication Approximation} (GMA) to approximate the PDF of any product term $X_iX_j$ given by
+%
+\begin{equation*}
+\begin{aligned}
+\mathbb{E}\left[X_{1} X_{2}\right] &=\mu_{1} \mu_{2}+\operatorname{cov}\left(X_{1}, X_{2}\right), \\
+\operatorname{cov}\left(X_{3}, X_{1} X_{2}\right) &=\operatorname{cov}\left(X_{1}, X_{3}\right), \mu_{2}+\operatorname{cov}\left(X_{2}, X_{3}\right) \mu_{1}, \\
+\operatorname{cov}\left(X_{1} X_{2}, X_{3} X_{4}\right) &=\operatorname{cov}\left(X_{1}, X_{3}\right) \operatorname{cov}\left(X_{2}, X_{4}\right) \\
+&+\operatorname{cov}\left(X_{1}, X_{4}\right) \operatorname{cov}\left(X_{2}, X_{3}\right) \\
+&+\operatorname{cov}\left(X_{1}, X_{3}\right) \mu_{2} \mu_{4}+\operatorname{cov}\left(X_{1}, X_{4}\right) \mu_{2} \mu_{3} \\
+&+\operatorname{cov}\left(X_{2}, X_{3}\right) \mu_{1} \mu_{4}+\operatorname{cov}\left(X_{2}, X_{4}\right) \mu_{1} \mu_{3}, \\
+\operatorname{var}\left(X_{1} X_{2}\right) &=\sigma_{1}^{2} \sigma_{2}^{2}+\operatorname{cov}\left(X_{1}, X_{2}\right)^{2} \\
+&+ 2 \operatorname{cov}\left(X_{1}, X_{2}\right) \mu_{1} \mu_{2}+\sigma_{1}^{2} \mu_{2}^{2}+\sigma_{2}^{2} \mu_{1}^{2},
+\end{aligned}
+\end{equation*}
+where $\mu, \sigma$ are respectively the mean and standard deviation of a random variable. 
+Unlike a traditional NN where parameters are updated using backpropagation, model parameters in a TAGI-NN can be obtained analytically by a layer-wise scheme as depicted in Figure \ref{fig:updateTAGI}.
+\begin{figure}[htbp]
+\centering
+\resizebox{0.9\linewidth}{!}{\input{Figures/update-TAGI}}
+\caption{Recursive layer-wise inference, reproduced from \cite{goulet2020tractable}.  Cyan arrows indicate inference directions.}
+\label{fig:updateTAGI}
+\end{figure}
+%
+First, given the observations $\bm{y}$, the output layer is updated as
+\begin{equation*} \label{eq:z0update}
+\begin{aligned}
+f\left(\boldsymbol{z}^{(\mathtt{O})} \mid \boldsymbol{y}\right) &=\mathcal{N}\left(\boldsymbol{z}^{(\mathtt{O})} ; \boldsymbol{\mu}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}}, \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}}\right) \\
+\boldsymbol{\mu}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}} &=\boldsymbol{\mu}_{\boldsymbol{Z}^{(\mathtt{O})}}+\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Z}^{(\mathtt{O})}}^{\top} \boldsymbol{\Sigma}_{\boldsymbol{Y}}^{-1}\left(\boldsymbol{y}-\boldsymbol{\mu}_{\boldsymbol{Y}}\right) \\
+\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}} &=\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(\mathtt{O})}}-\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Z}^{(\mathtt{O})}}^{\top} \boldsymbol{\Sigma}_{\boldsymbol{Y}}^{-1} \boldsymbol{\Sigma}_{\boldsymbol{Y Z}^{(\mathtt{O})}}.
+\end{aligned}
+\end{equation*}
+%
+Next, the hidden units and parameters of the layer $i^{th}$ are updated using a layer-wise procedure as
+\begin{equation*}  \label{eq:layerwiseupdate}
+\begin{aligned}
+f(\boldsymbol{z} \mid \boldsymbol{y}) &=\mathcal{N}\left(\boldsymbol{z} ; \boldsymbol{\mu}_{\boldsymbol{Z} \mid \boldsymbol{y}}, \boldsymbol{\Sigma}_{\boldsymbol{Z} \mid \boldsymbol{y}}\right) \\
+\boldsymbol{\mu}_{\boldsymbol{Z} \mid \boldsymbol{y}} &=\boldsymbol{\mu}_{\boldsymbol{Z}}+\mathbf{J}_{\boldsymbol{Z}}\left(\boldsymbol{\mu}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\mu}_{\boldsymbol{Z}^{+}}\right) \\
+\boldsymbol{\Sigma}_{\boldsymbol{Z} \mid \boldsymbol{y}} &=\boldsymbol{\Sigma}_{\boldsymbol{Z}}+\mathbf{J}_{\boldsymbol{Z}}\left(\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}\right) \mathbf{J}_{\boldsymbol{Z}}^{\top} \\
+\mathbf{J}_{\boldsymbol{Z}} &=\boldsymbol{\Sigma}_{\boldsymbol{Z Z}^{+}} \boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}^{-1},
+\end{aligned}
+\end{equation*}
+%
+\begin{equation*}
+\begin{aligned}
+f(\boldsymbol{\theta} \mid \boldsymbol{y}) &=\mathcal{N}\left(\boldsymbol{\theta} ; \boldsymbol{\mu}_{\boldsymbol{\theta} \mid \boldsymbol{y}}, \boldsymbol{\Sigma}_{\boldsymbol{\theta} \mid \boldsymbol{y}}\right) \\
+\boldsymbol{\mu}_{\boldsymbol{\theta} \mid \boldsymbol{y}} &=\boldsymbol{\mu}_{\boldsymbol{\theta}}+\mathbf{J}_{\boldsymbol{\theta}}\left(\boldsymbol{\mu}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\mu}_{\boldsymbol{Z}^{+}}\right) \\
+\boldsymbol{\Sigma}_{\boldsymbol{\theta} \mid \boldsymbol{y}} &=\boldsymbol{\Sigma}_{\boldsymbol{\theta}}+\mathbf{J}_{\boldsymbol{\theta}}\left(\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}\right) \mathbf{J}_{\boldsymbol{\theta}}^{\top} \\
+\mathbf{J}_{\boldsymbol{\theta}} &=\boldsymbol{\Sigma}_{\boldsymbol{\theta} Z^{+}} \boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}^{-1},
+\end{aligned}
+\end{equation*}
+where $\left\{\boldsymbol{\theta}^{+}, \boldsymbol{Z}^{+}\right\}$ is the short-hand notation of $\left\{\boldsymbol{\theta}^{(j+1)}, \boldsymbol{Z}^{(j+1)}\right\}$, and $\{\boldsymbol{\theta}, \boldsymbol{Z}\}$ is the short-hand notation of  $\left\{\boldsymbol{\theta}^{(j)}, \boldsymbol{Z}^{(j)}\right\}$.
+Using the TAGI method, we can update parameters analytically using a single observation rather than a mini-batch of samples which is typically used in backpropagation. Therefore, this method is suited for online analysis where new observations are coming sequentially. While this section only introduces the TAGI method for a simple feedforward neural network, this method is applicable for any NN architectures that are already developed. This is because the difference between TAGI-NN and traditional NN models is the parameter update mechanism but the architecture is unchanged.
+
+I NEED TO FURTHER ADD WHY THE ASSUMPTIONS HOLD.
+
+TALK HERE ABOUT HOW CLASSIFICATION IS CURRENTLY HANDLED SINCE WHAT IS PRESENTED HANDLES ONLY REGRESSION.
 
 \section{Electronic Submission}
 \label{submission}
