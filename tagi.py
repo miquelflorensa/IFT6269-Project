@@ -25,6 +25,7 @@ class TAGI:
         self.layers = layers
         self.parameters = self.init_parameters(layers)
         self.hidden_states = self.init_hidden_states(layers)
+        self.activated_states = self.init_hidden_states(layers)
         self.covariances = self.init_covariances(layers)
         self.mu = 0
         self.sigma = 1
@@ -187,6 +188,7 @@ class TAGI:
         return ma, Sa, J
 
     def forward(self, X):
+        print("forward")
         """
         Perform a forward pass through the network using GMA.
 
@@ -201,9 +203,13 @@ class TAGI:
 
         # To-do: Implement forward pass using GMA and compute the covariances.
         self.hidden_states[0]["ma"], self.hidden_states[0]["Sa"] = X, np.zeros_like(X)
+        self.activated_states[0]["ma"], self.activated_states[0]["Sa"] = (
+            X,
+            np.zeros_like(X),
+        )
 
         for i in range(len(self.layers) - 1):
-            ma, Sa = self.hidden_states[i]["ma"], self.hidden_states[i]["Sa"]
+            ma, Sa = self.activated_states[i]["ma"], self.activated_states[i]["Sa"]
             mw, Sw = self.parameters[i]["mw"], self.parameters[i]["Sw"]
             mb, Sb = self.parameters[i]["mb"], self.parameters[i]["Sb"]
 
@@ -219,19 +225,30 @@ class TAGI:
             else:
                 ma, Sa = mz, Sz
 
-            self.hidden_states[i + 1] = {"ma": ma, "Sa": Sa, "J": J}
+            self.hidden_states[i + 1] = {"ma": mz, "Sa": Sz, "J": J}
+            self.activated_states[i + 1] = {"ma": ma, "Sa": Sa, "J": J}
 
-            self.covariances[i]["covZw"] = ma.T @ Sw
+            self.covariances[i]["covZw"] = Sw * mz 
             self.covariances[i]["covZb"] = Sb
-            self.covariances[i]["covZZ"] = (Sz @ J.T @ mw).T  # TODO: Check this
-            print("covzz", self.covariances[i]["covZZ"])
-            print("covzw", self.covariances[i]["covZw"])
-            print("covzb", self.covariances[i]["covZb"])
+            # self.covariances[i]["covZZ"] = (Sz @ J.T @ mw).T  # TODO: Check this
+            self.covariances[i]["covZZ"] = Sz * J * mw
+            print(self.covariances[i]["covZZ"])
+            print(self.covariances[i]["covZZ"].shape)
+            print(self.covariances[i]["covZw"])
+            print(self.covariances[i]["covZw"].shape)
+            print(self.covariances[i]["covZb"])
+            print(self.covariances[i]["covZb"].shape)
+            break
+            # self.covariances[i]["covZZ"] = mw * Sz * J
+            # clip covzz
+            # self.covariances[i]["covZZ"] = np.clip(self.covariances[i]["covZZ"], -1, 1)
+
 
         # Output layer
-        return self.hidden_states[-1]["ma"], self.hidden_states[-1]["Sa"]
+        return self.activated_states[-1]["ma"], self.activated_states[-1]["Sa"]
 
     def backward(self, Y, sigma_v):
+        print("backward")
         """
         Perform a backward pass through the network using Bayesian inference.
 
@@ -255,8 +272,8 @@ class TAGI:
             - J_{\theta} = cov_{\theta, Z+} * cov_{Z+}^{-1}
         """
         # store the forward pass hidden states
-        forward_ma = [hs["ma"].copy() for hs in self.hidden_states]
-        forward_Sa = [hs["Sa"].copy() for hs in self.hidden_states]
+        forward_mz = [hs["ma"].copy() for hs in self.hidden_states]
+        forward_Sz = [hs["Sa"].copy() for hs in self.hidden_states]
 
         # Update output layer
         mu_y = self.hidden_states[-1]["ma"]  # Predicted mean of the output
@@ -281,10 +298,10 @@ class TAGI:
         # RTS smoother for parameters
         for i in reversed(range(len(self.layers) - 1)):
             # Calculate the Jacobian
-            # denominator = self.hidden_states[i + 1]["Sa"]
-            denominator = forward_Sa[i + 1]
+            # denominator = forward_Sz[i + 1]
+            denominator = self.hidden_states[i+1]["Sa"]
             J_z = np.where(
-                denominator != 0, self.covariances[i]["covZZ"] / denominator, 0
+                denominator != 0, self.covariances[i]["covZZ"]/denominator, 0
             )
             J_w = np.where(
                 denominator != 0, self.covariances[i]["covZw"] / denominator, 0
@@ -293,33 +310,19 @@ class TAGI:
                 denominator != 0, self.covariances[i]["covZb"] / denominator, 0
             )
 
-            # Get the prior values for the parameters and hidden states
-            mu_z = self.hidden_states[i]["ma"]  # TODO: Check this
-            Sigma_z = self.hidden_states[i]["Sa"]  # TODO: Check this
-            mu_w = self.parameters[i]["mw"]  # Mean of the parameters (weights)
-            Sigma_w = self.parameters[i]["Sw"]  # Variance of the parameters (weights)
-            mu_b = self.parameters[i]["mb"]  # Mean of the parameters (weights)
-            Sigma_b = self.parameters[i]["Sb"]  # Variance of the parameters (weights)
-
-            # Retrieve posterior values from next layer
-            mu_z_next_y = self.hidden_states[i + 1]["ma"]
-            Sigma_z_next_y = self.hidden_states[i + 1]["Sa"]
-
             # Update posterior for the current layer's parameters
-            delta_mu_z = mu_z_next_y - forward_ma[i + 1]
-            delta_Sigma_z = Sigma_z_next_y - forward_Sa[i + 1]
-            print("delta_mu_z", delta_mu_z[0])
-            print("delta_Sigma_z", delta_Sigma_z[0])
+            delta_mu_z = self.hidden_states[i + 1]["ma"] - forward_mz[i + 1]
+            delta_Sigma_z = self.hidden_states[i + 1]["Sa"] - forward_Sz[i + 1]
 
             # Compute the updated mean and variance of the hidden states
-            mu_z_y = mu_z + J_z * delta_mu_z
-            Sigma_z_y = Sigma_z + delta_Sigma_z * J_z**2
+            mu_z_y = self.hidden_states[i]["ma"] + J_z * delta_mu_z
+            Sigma_z_y = self.hidden_states[i]["Sa"] + delta_Sigma_z * J_z**2
 
             # Compute updated mean and variance for parameters
-            mu_w_y = mu_w + J_w * delta_mu_z
-            Sigma_w_y = Sigma_w + delta_Sigma_z * (J_w**2)
-            mu_b_y = mu_b + J_b * delta_mu_z
-            Sigma_b_y = Sigma_b + delta_Sigma_z * (J_b**2)
+            mu_w_y = self.parameters[i]["mw"] + J_w * delta_mu_z
+            Sigma_w_y = self.parameters[i]["Sw"] + delta_Sigma_z * (J_w**2)
+            mu_b_y = self.parameters[i]["mb"] + J_b * delta_mu_z
+            Sigma_b_y = self.parameters[i]["Sb"] + delta_Sigma_z * (J_b**2)
 
             # Save updated parameter posterior
             self.parameters[i]["mw"] = mu_w_y
@@ -353,7 +356,7 @@ train_Y, test_Y = Y[:train_size], Y[train_size:]
 plt.scatter(train_X, train_Y, marker="o", color="b")
 
 # Train
-net = TAGI([1, 10, 1])  # define model
+net = TAGI([1, 50, 1])  # define model
 train_X = net.standardize_data(train_X)
 train_Y = net.standardize_data(train_Y)
 
