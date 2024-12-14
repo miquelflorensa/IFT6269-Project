@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.13)  14 DEC 2024 10:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.13)  14 DEC 2024 10:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -712,32 +712,26 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 
 ]
 
-LaTeX Warning: Reference `sec:experiments' on page 2 undefined on input line 120.
+Package natbib Warning: Citation `gal16' on page 2 undefined on input line 124.
 
 
-LaTeX Warning: Reference `sec:conclusion' on page 2 undefined on input line 120.
+Package natbib Warning: Citation `well11' on page 2 undefined on input line 131.
 
 
-Package natbib Warning: Citation `gal16' on page 2 undefined on input line 126.
+Package natbib Warning: Citation `neal12' on page 2 undefined on input line 138.
 
 
-Package natbib Warning: Citation `well11' on page 2 undefined on input line 133.
+Package natbib Warning: Citation `blundell15' on page 2 undefined on input line 145.
 
 
-Package natbib Warning: Citation `neal12' on page 2 undefined on input line 140.
+Package natbib Warning: Citation `NIPS2017' on page 2 undefined on input line 152.
 
 
-Package natbib Warning: Citation `blundell15' on page 2 undefined on input line 147.
-
-
-Package natbib Warning: Citation `NIPS2017' on page 2 undefined on input line 154.
+Package natbib Warning: Citation `NIPS2011' on page 2 undefined on input line 159.
 
 [2]
 
-Package natbib Warning: Citation `NIPS2011' on page 3 undefined on input line 161.
-
-
-Package natbib Warning: Citation `hobbhahn22a' on page 3 undefined on input line 168.
+Package natbib Warning: Citation `hobbhahn22a' on page 3 undefined on input line 166.
 
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
@@ -747,13 +741,13 @@ Package microtype Info: Loading generic protrusion settings for font family
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.204 
-      ] (./Figures/update-TAGI.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 263--266
+l.219 \end{align*}
+                  ] (./Figures/update-TAGI.tex)
+Underfull \hbox (badness 10000) in paragraph at lines 261--264
 \OT1/ptm/m/n/10 (+20) where $[]$ is the short-hand no-ta-tion of
  []
 
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 276.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 274.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
@@ -765,34 +759,34 @@ Package microtype Info: Loading generic protrusion settings for font family
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.311 
+l.321 
       ]
-Overfull \hbox (13.52222pt too wide) in paragraph at lines 345--345
+Overfull \hbox (13.52222pt too wide) in paragraph at lines 343--343
 []\OT1/pcr/m/n/9 dvips -Ppdf -tletter -G0 -o paper.ps paper.dvi[] 
  []
 
 
-Underfull \hbox (badness 1371) in paragraph at lines 379--382
+Underfull \hbox (badness 1371) in paragraph at lines 377--380
 \OT1/ptm/m/n/10 (+20) oth-ers) is han-dled au-to-mat-i-cally by sim-ply chang-ing
  []
 
 [5]
-Underfull \hbox (badness 1755) in paragraph at lines 436--443
+Underfull \hbox (badness 1755) in paragraph at lines 434--441
 \OT1/ptm/m/n/10 (+20) must not ap-pear. If you are us-ing L[]T[]X and the
  []
 
+LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 482.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 484.
 
-Underfull \hbox (badness 1189) in paragraph at lines 487--491
+Underfull \hbox (badness 1189) in paragraph at lines 485--489
 []\OT1/ptm/m/n/10 (+20) A sam-ple file with au-thor names is in-cluded in the
  []
 
 
-Underfull \hbox (badness 1460) in paragraph at lines 494--501
+Underfull \hbox (badness 1460) in paragraph at lines 492--499
 []\OT1/ptm/m/n/10 (+20) The pa-per ab-stract should be-gin in the left col-umn,
  []
 
@@ -800,35 +794,35 @@ Underfull \hbox (badness 1460) in paragraph at lines 494--501
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [6]
-<icml_numpapers.pdf, id=112, 495.8525pt x 392.46625pt>
+<icml_numpapers.pdf, id=111, 495.8525pt x 392.46625pt>
 File: icml_numpapers.pdf Graphic file (type pdf)
 <use icml_numpapers.pdf>
-Package pdftex.def Info: icml_numpapers.pdf  used on input line 544.
+Package pdftex.def Info: icml_numpapers.pdf  used on input line 542.
 (pdftex.def)             Requested size: 234.8775pt x 185.90239pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1297) has occurred while \output is active []
 
  [7
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.656 
+l.647 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.647 
        <./icml_numpapers.pdf>]
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 688.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 686.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 688.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 686.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- (./example_paper.bbl [8
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.53 
-     ])
+ (./example_paper.bbl) [8]
 
 Package natbib Warning: There were undefined citations.
 
@@ -841,24 +835,24 @@ L3 programming layer <2024-02-20>
  ***********
 
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package rerunfilecheck Info: File `example_paper.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 24709 strings out of 474116
- 445963 string characters out of 5743682
- 2000187 words of memory out of 5000000
- 46204 multiletter control sequences out of 15000+600000
+ 24707 strings out of 474116
+ 445930 string characters out of 5743682
+ 2002187 words of memory out of 5000000
+ 46202 multiletter control sequences out of 15000+600000
  614184 words of font info for 328 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,16n,93p,3013b,987s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on example_paper.pdf (9 pages, 337161 bytes).
+Output written on example_paper.pdf (9 pages, 336714 bytes).
 PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
- 234 compressed objects within 3 object streams
+ 303 PDF objects out of 1000 (max. 8388607)
+ 232 compressed objects within 3 object streams
  60 named destinations out of 1000 (max. 500000)
  87570 words of extra memory for PDF output out of 89155 (max. 10000000)
 
