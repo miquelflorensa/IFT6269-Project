@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2024.1.31)  16 DEC 2024 18:36
+This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2024.1.31)  17 DEC 2024 19:59
  restricted system commands enabled.
  file:line:error style messages enabled.
 **2024_Remax_DW_KS_MF.tex
@@ -1794,9 +1794,49 @@ File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 (/usr/local/texlive/2023/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-) [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+)
+<Figures/cupyTAGI.pdf, id=13, 380.1673pt x 160.75659pt>
+File: Figures/cupyTAGI.pdf Graphic file (type pdf)
+<use Figures/cupyTAGI.pdf>
+Package luatex.def Info: Figures/cupyTAGI.pdf  used on input line 204.
+(luatex.def)             Requested size: 327.20668pt x 138.36324pt.
 
-]
+Overfull \hbox (3.98172pt too wide) in paragraph at lines 204--204
+ [][] 
+ []
+
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmtt' (encoding: TU).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Calculating math sizes for size <21.15> on input line 204.
+
+LaTeX Font Warning: Font shape `OMX/cmex/m/n' in size <21.15> not available
+(Font)              size <20.74> substituted on input line 204.
+
+
+LaTeX Font Warning: Font shape `OMX/cmex/m/n' in size <14.80492> not available
+(Font)              size <14.4> substituted on input line 204.
+
+<Figures/cuTAGI_refs_QR.pdf, id=14, 1010.77625pt x 1010.77625pt>
+File: Figures/cuTAGI_refs_QR.pdf Graphic file (type pdf)
+<use Figures/cuTAGI_refs_QR.pdf>
+Package luatex.def Info: Figures/cuTAGI_refs_QR.pdf  used on input line 204.
+(luatex.def)             Requested size: 85.35826pt x 85.3519pt.
+<Figures/IJF.jpg, id=15, 565.11125pt x 770.88pt>
+File: Figures/IJF.jpg Graphic file (type jpg)
+<use Figures/IJF.jpg>
+Package luatex.def Info: Figures/IJF.jpg  used on input line 204.
+(luatex.def)             Requested size: 56.9055pt x 77.62183pt.
+<Figures/TAGI_AA_JMLR_2.png, id=16, 194.1654pt x 232.2276pt>
+File: Figures/TAGI_AA_JMLR_2.png Graphic file (type png)
+<use Figures/TAGI_AA_JMLR_2.png>
+Package luatex.def Info: Figures/TAGI_AA_JMLR_2.png  used on input line 204.
+(luatex.def)             Requested size: 62.59605pt x 74.86359pt.
+[1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+<./Figures/cupyTAGI.pdf><./Figures/cuTAGI_refs_QR.pdf><./Figures/IJF.jpg><./Figu
+res/TAGI_AA_JMLR_2.png>]
 \tf@nav=\write7
 
 \openout7 = 2024_Remax_DW_KS_MF.nav
@@ -1806,8 +1846,7 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 \tf@snm=\write9
 
 \openout9 = 2024_Remax_DW_KS_MF.snm
-
-(./2024_Remax_DW_KS_MF.aux)
+ (./2024_Remax_DW_KS_MF.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 5.58pt have occurred.
@@ -1817,24 +1856,30 @@ Package rerunfilecheck Info: File `2024_Remax_DW_KS_MF.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 48217 strings out of 478285
+ 48414 strings out of 478285
  125240,1977958 words of node,token memory allocated
- 4929 words of node memory still in use:
-   51 hlist, 13 vlist, 7 rule, 19 disc, 14 local_par, 6 math, 122 glue, 50 kern,
- 33 penalty, 3 margin_kern, 189 glyph, 162 attribute, 87 glue_spec, 162 attribut
-e_list, 4 write, 64 pdf_literal, 16 pdf_colorstack nodes
-   avail lists: 1:2,2:381,3:315,4:204,5:198,6:48,7:1213,8:1,9:360,10:10,11:57
- 66302 multiletter control sequences out of 65536+600000
- 85 fonts using 13589191 bytes
- 128i,17n,130p,1015b,956s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2023/texmf-dist/fonts/truetype/typoland/lato/Lato-Light.ttf>
-</usr/local/texlive/2023/texmf-dist/fonts/opentype/impallari/raleway/Raleway-Reg
-ular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/impallari/raleway/Ra
-leway-Bold.otf>
-Output written on 2024_Remax_DW_KS_MF.pdf (1 page, 23672 bytes).
+ 23713 words of node memory still in use:
+   194 hlist, 23 vlist, 27 rule, 137 disc, 43 local_par, 14 math, 556 glue, 328 
+kern, 92 penalty, 17 margin_kern, 1455 glyph, 539 attribute, 87 glue_spec, 539 a
+ttribute_list, 4 write, 128 pdf_literal, 126 pdf_colorstack, 4 pdf_setmatrix, 4 
+pdf_save, 4 pdf_restore nodes
+   avail lists: 1:3,2:381,3:717,4:573,5:1029,6:132,7:6322,8:1,9:876,10:11,11:411
 
-PDF statistics: 44 PDF objects out of 1000 (max. 8388607)
- 25 compressed objects within 1 object stream
+ 66473 multiletter control sequences out of 65536+600000
+ 123 fonts using 17834727 bytes
+ 128i,18n,130p,1015b,1461s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/truetype/typoland/lato/Lato-LightItali
+c.ttf></usr/local/texlive/2023/texmf-dist/fonts/truetype/typoland/lato/Lato-Ital
+ic.ttf></usr/local/texlive/2023/texmf-dist/fonts/truetype/typoland/lato/Lato-Reg
+ular.ttf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmmono12-r
+egular.otf></usr/local/texlive/2023/texmf-dist/fonts/truetype/typoland/lato/Lato
+-Light.ttf></usr/local/texlive/2023/texmf-dist/fonts/opentype/impallari/raleway/
+Raleway-Regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/impallari
+/raleway/Raleway-Bold.otf>
+Output written on 2024_Remax_DW_KS_MF.pdf (1 page, 475407 bytes).
+
+PDF statistics: 93 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  3 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 100000000)
 
