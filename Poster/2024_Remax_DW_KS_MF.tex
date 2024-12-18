@@ -119,11 +119,86 @@
 
 
 \end{column}
+
+
+
 %%%%%%%%%%
 %%% Column 3
 %%%%%%%%%%
 \begin{column}[T]{.31\textwidth}
 
+%% Key Results
+\begin{block}{Key Results: TAGI-HRC vs. TAGI-Remax vs. Torch}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Framework & Avg. Training Error & Avg. Test Error \\
+\midrule
+Torch      & 10.05 & 10.69 \\
+TAGI-HRC       & 7.07  & \textbf{7.73} \\
+TAGI-Remax & 7.14  & \textbf{7.78} \\
+\bottomrule
+\end{tabular}
+\end{block}
+
+%% Important Findings
+\begin{block}{Important Findings}
+\begin{itemize}
+    \item \textbf{Batch Size:} TAGI excels with smaller batches, while Torch performs better with larger batches.
+    \item \textbf{Network Depth:} TAGI maintains stability as depth increases, unlike Torch, which struggles without batch normalization.
+    \item \textbf{Effect of $\sigma_v$:} Higher $\sigma_v$ values enhance TAGI's performance, especially in deeper networks.
+    \item \textbf{Capacity Effect:} TAGI benefits more from increasing neurons/channels, showing improved generalization, while Torch fails to utilize additional capacity effectively.
+    \item \textbf{Comparison of Implementations:} TAGI-HRC achieves better error rates overall, while TAGI-Remax shows higher stability but less frequent best-case performance.
+    \item \textbf{Batch Normalization:} TAGI performs well even without batch normalization, handling deeper architectures (5+ layers) where Torch often diverges.
+\end{itemize}
+\end{block}
+
+%% Figures and Tables (Side-by-Side)
+\begin{block}{Ablation Study: Performance Comparisons and Capacity Effects}
+\begin{figure}[h]
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{Figures/num_layers_test_error.png}
+        \caption*{\textbf{Test Error vs Network Depth:} TAGI maintains low error rates, while Torch degrades significantly.}
+    \end{minipage}\hfill
+    \begin{minipage}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{Figures/tagi_sigma_comparison.png}
+        \caption*{\textbf{Impact of $\sigma_v$:} Higher $\sigma_v$ values improve TAGI's test error.}
+    \end{minipage}
+\end{figure}
+
+
+
+
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{Small Batch (16)} & \multicolumn{2}{c}{Large Batch (512)} \\
+Framework & With BN & W.o BN & With BN & W.o BN \\
+\midrule
+Torch      & \textbf{1.35} & 31.20 & \textbf{1.06} & 16.22 \\
+TAGI-HRC       & 1.97         & \textbf{1.74} & 4.11 & 15.99 \\
+TAGI-Remax & 12.05         & 7.30         & 5.75 & \textbf{5.43} \\
+\bottomrule
+\end{tabular}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\begin{tabular}{lcc}
+\toprule
+ & Small (32) & Large (512) \\
+Framework & Neurons/layer & Neurons/layer \\
+\midrule
+Torch      & 7.03 &  7.32 \\
+TAGI-HRC       & 13.58         &  \textbf{8.98} \\
+TAGI-Remax &  9.25         &  \textbf{6.91} \\
+\bottomrule
+\end{tabular}
+\end{column}
+\end{columns}
+\end{block}
 
 
 %% cuTAGI
