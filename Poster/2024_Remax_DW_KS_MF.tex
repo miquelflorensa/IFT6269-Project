@@ -73,13 +73,14 @@
 % Title
 % ====================
 
-\title{Implementation of probabilistic Softmax for BNNs}
+\title{Implementation of a probabilistic Softmax for BNNs (Group 11)}
 \logoleft{%
 %\includegraphics[width=0.06\paperwidth]{Figures/Polytechnique_logo.pdf}
 }
 \logoright{%
 }
-\author{David Wardan, Khalil Sabri, \,and\, Miquel Florensa  -- Polytechnique Montr\'{e}al, Canada}
+%\author{Adapted from the work proposed by Nguyen \& Goulet \quad  David Wardan, Khalil Sabri, \,and\, Miquel Florensa  -- Polytechnique Montr\'{e}al, Canada}
+\author{  David Wardan, Khalil Sabri, \,and\, Miquel Florensa  -- Polytechnique Montr\'{e}al, Canada \\ \vspace{5mm} \Large (Adapted from the work proposed by Nguyen \& Goulet)}
 
 \institute[shortinst]{}
 
@@ -106,9 +107,112 @@
 %%%%%%%%%%
 \begin{column}[T]{.31\textwidth}
 
-{\Large COLUMN 1 (TAGI)}
+\begin{block}{Tractable Approximate Gaussian Inference (TAGI)}
+
+\end{block}
 
 
+
+\begin{block}{TAGI - Forward uncertainty propagation}
+ \begin{figure}[h!]
+ \centering
+  \includegraphics[width=1\textwidth]{Figures/forward_pass.pdf}
+ \end{figure}
+
+ \begin{columns}
+ \begin{column}{0.33\textwidth}
+\begin{equation*} \label{eq:nn}
+\begin{split}
+\bm{z}^{(1)} &= \bm{w}^{(0)} \bm{x} + \bm{b}^{(0)}, \\
+\bm{a}^{(i)} &= {\color{cyan}\tilde{\sigma}(\bm{z}^{(i)})}, \\
+\bm{z}^{(i)} &= {\color{magenta}\bm{w}^{(i)} \bm{a}^{(i-1)}} + \bm{b}^{(i)}, \\
+\bm{z}^{(\mathtt{O})} &=  {\color{magenta}\bm{w}^{(\mathtt{L})} \bm{a}^{(\mathtt{L})}} + \bm{w}^{(\mathtt{L})} \\
+\bm{y} &=  \bm{z}^{(\mathtt{O})} + \bm{v}.
+\end{split}
+\end{equation*}
+where $\bm{v}$ are the observation noise.
+\end{column}
+
+\begin{column}{0.33\textwidth}
+{\color{magenta}Challenge 1:} GMA
+\vspace{1.1cm}
+ \begin{figure}[h!]
+ \centering
+  \includegraphics[width=0.85\textwidth]{Figures/GMA_CLT_10.pdf}
+ \end{figure}
+\vspace{1cm}
+
+\end{column}
+\begin{column}{0.33\textwidth}
+{\color{cyan}Challenge 2:} Locally Linearize
+ \begin{figure}[h!]
+ \centering
+  \includegraphics[width=0.8\textwidth]{Figures/Linearized_activation_fct.pdf}
+ \end{figure}
+\end{column}
+\end{columns}
+ \end{block}
+
+\begin{block}{TAGI - Backward parameter and hidden state inference}
+  \begin{figure}[h!]
+ \centering
+  \includegraphics[width=1\textwidth]{Figures/backward_pass.pdf}
+ \end{figure}
+
+
+First, given the observations $\bm{y}$, the output layer is updated as
+\begin{equation*} \label{eq:z0update}
+\begin{split}
+f\left(\boldsymbol{z}^{(\mathtt{O})} \mid \boldsymbol{y}\right) &=\mathcal{N}\left(\boldsymbol{z}^{(\mathtt{O})} ; \boldsymbol{\mu}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}}, \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}}\right) \\
+\boldsymbol{\mu}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}} &=\boldsymbol{\mu}_{\boldsymbol{Z}^{(\mathtt{O})}}+\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Z}^{(\mathtt{O})}}^{\top} \boldsymbol{\Sigma}_{\boldsymbol{Y}}^{-1}\left(\boldsymbol{y}-\boldsymbol{\mu}_{\boldsymbol{Y}}\right) \\
+\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(\mathtt{O})} \mid \boldsymbol{y}} &=\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(\mathtt{O})}}-\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Z}^{(\mathtt{O})}}^{\top} \boldsymbol{\Sigma}_{\boldsymbol{Y}}^{-1} \boldsymbol{\Sigma}_{\boldsymbol{Y Z}^{(\mathtt{O})}}.
+\end{split}
+\end{equation*}
+
+Next, the hidden units and parameters of the layer $i^{th}$ are updated using a layer-wise procedure as
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{equation*}  \label{eq:layerwiseupdate}
+\begin{split}
+f(\boldsymbol{z} \mid \boldsymbol{y}) &=\mathcal{N}\left(\boldsymbol{z} ; \boldsymbol{\mu}_{\boldsymbol{Z} \mid \boldsymbol{y}}, \boldsymbol{\Sigma}_{\boldsymbol{Z} \mid \boldsymbol{y}}\right) \\
+\boldsymbol{\mu}_{\boldsymbol{Z} \mid \boldsymbol{y}} &=\boldsymbol{\mu}_{\boldsymbol{Z}}+\mathbf{J}_{\boldsymbol{Z}}\left(\boldsymbol{\mu}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\mu}_{\boldsymbol{Z}^{+}}\right) \\
+\boldsymbol{\Sigma}_{\boldsymbol{Z} \mid \boldsymbol{y}} &=\boldsymbol{\Sigma}_{\boldsymbol{Z}}+\mathbf{J}_{\boldsymbol{Z}}\left(\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}\right) \mathbf{J}_{\boldsymbol{Z}}^{\top} \\
+\mathbf{J}_{\boldsymbol{Z}} &=\boldsymbol{\Sigma}_{\boldsymbol{Z Z}^{+}} \boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}^{-1},
+\end{split}
+\end{equation*}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{equation*}
+\begin{split}
+f(\boldsymbol{\theta} \mid \boldsymbol{y}) &=\mathcal{N}\left(\boldsymbol{\theta} ; \boldsymbol{\mu}_{\boldsymbol{\theta} \mid \boldsymbol{y}}, \boldsymbol{\Sigma}_{\boldsymbol{\theta} \mid \boldsymbol{y}}\right) \\
+\boldsymbol{\mu}_{\boldsymbol{\theta} \mid \boldsymbol{y}} &=\boldsymbol{\mu}_{\boldsymbol{\theta}}+\mathbf{J}_{\boldsymbol{\theta}}\left(\boldsymbol{\mu}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\mu}_{\boldsymbol{Z}^{+}}\right) \\
+\boldsymbol{\Sigma}_{\boldsymbol{\theta} \mid \boldsymbol{y}} &=\boldsymbol{\Sigma}_{\boldsymbol{\theta}}+\mathbf{J}_{\boldsymbol{\theta}}\left(\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+} \mid \boldsymbol{y}}-\boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}\right) \mathbf{J}_{\boldsymbol{\theta}}^{\top} \\
+\mathbf{J}_{\boldsymbol{\theta}} &=\boldsymbol{\Sigma}_{\boldsymbol{\theta} Z^{+}} \boldsymbol{\Sigma}_{\boldsymbol{Z}^{+}}^{-1},
+\end{split}
+\end{equation*}
+\end{column}
+\end{columns}
+where $\left\{\boldsymbol{\theta}^{+}, \boldsymbol{Z}^{+}\right\}$ is the short-hand notation of $\left\{\boldsymbol{\theta}^{(j+1)}, \boldsymbol{Z}^{(j+1)}\right\}$, and $\{\boldsymbol{\theta}, \boldsymbol{Z}\}$ is the short-hand notation of  $\left\{\boldsymbol{\theta}^{(j)}, \boldsymbol{Z}^{(j)}\right\}$.
+\end{block}
+
+\begin{block}{Regression toy example}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+  \begin{figure}[h!]
+ \centering
+  \includegraphics[width=0.8\textwidth]{Figures/toy_example.pdf}
+ \end{figure}
+ \end{column}
+ \begin{column}{0.5\textwidth}
+ \begin{itemize}
+ \item We re-implement the toy example presented by the authors using the numpy library in Python.
+ \item This includes defining a fully connected neural network with one layer and 40 hidden units.
+ \item The figure shows the output of the model on the test set with the epistemic uncertainty.
+\end{itemize}
+ \end{column}
+\end{columns}
+\end{block}
 \end{column}
 %%%%%%%%%%
 %%% Column 2
@@ -255,10 +359,10 @@ TAGI-Remax &  9.25         &  \textbf{6.91} \\
 
 \begin{column}{.79\textwidth}
 \begin{itemize}
-\item \emph{\alert{\bf Coupling LSTM Neural Networks and SSM through Analytically Tractable Inference}},\\(Vuong, Nguyen \& Goulet, International Journal of Forecasting, 2024)
-\item \emph{Analytically tractable hidden-states inference in Bayesian neural networks}\\ (Nguyen and Goulet. Journal-to-conference track, ICLR 2024)
+\item \emph{Coupling LSTM Neural Networks and SSM through Analytically Tractable Inference},\\(Vuong, Nguyen \& Goulet, International Journal of Forecasting, 2024)
+\item \emph{\bf Analytically tractable hidden-states inference in Bayesian neural networks}\\ (Nguyen and Goulet. Journal-to-conference track, ICLR 2024)
 \item \emph{Analytically tractable heteroscedastic uncertainty quantification in Bayesian neural networks for regression tasks}\\ (Deka, Nguyen \& Goulet. Neurocomputing, 2024)
-\item \emph{Tractable approximate Gaussian inference for Bayesian neural networks}\\ (Goulet, Nguyen, \& Amiri, JMLR, 2021)
+\item \emph{\bf Tractable approximate Gaussian inference for Bayesian neural networks}\\ (Goulet, Nguyen, \& Amiri, JMLR, 2021)
 %\item \emph{Analytically tractable inference in deep neural networks}\\ (Nguyen and Goulet. 2021)
 %\item \emph{Analytically tractable Bayesian deep Q-Learning} (Nguyen and Goulet. 2021)
 \end{itemize}
