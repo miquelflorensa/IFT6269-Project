@@ -124,7 +124,74 @@
 %%%%%%%%%%
 \begin{column}[T]{.31\textwidth}
 
-{\Large COLUMN 3 (pyTorch vs pyTAGI)}
+
+
+%% cuTAGI
+\begin{block}{py/cuTAGI -- Open-source Bayesian deep-learning framework}\vspace{0pt}\centering
+
+
+\begin{columns}
+\begin{column}{.35\textwidth}\centering\bigskip
+
+
+\bigskip
+
+
+\medskip
+
+
+\includegraphics[width=115mm]{Figures/cupyTAGI.pdf}\\[20pt]
+
+
+{\texttt{github\!.\!com/lhnguyen102/\!cuTAGI}}\\[20pt]
+%{\LARGE\texttt{tagiml.com}}\\[20pt]
+{\Large\texttt{\alert{ pip install pytagi}}}
+\end{column}
+%\begin{column}{.22\textwidth}\centering\vspace{-25pt}
+%\includegraphics[width=120mm]{Figures/cutagi_example.pdf}
+%\end{column}
+\begin{column}{.6\textwidth}
+\begin{itemize}
+\item \alert{\bf Performance-Oriented Kernels} written in C++/CUDA from scratch, with pybind11 for a seamless integration. It allows running on CPU \& CUDA devices through a Python API.
+\item \alert{\bf Broad Architecture Support} of the basic DNN layer including \emph{\color{darkblue}\bf Linear}, \emph{\color{cyan}\bf CNNs}, \emph{\color{blue}\bf Transposed CNNs}, \emph{\color{magenta}\bf LSTM}, \emph{\color{orange}\bf Average pooling}, \emph{\color{teal}\bf Batch} and \emph{\color{violet}\bf Layer normalization}, enabling the building of mainstream architectures such as \emph{Autoencoders}, \emph{Transformers}, \emph{Diffusion Models}, and \emph{GANs}.
+\item \alert{\bf Model Building and Execution} currently supports sequential model building, with plans to introduce Eager Execution
+\item \alert{\bf Open Platform} providing access to its entire codebase. 
+\end{itemize}
+
+
+\end{column}
+\end{columns}
+\end{block}%\bigskip
+\vspace{-5mm}
+
+
+ 
+%% cuTAGI
+\begin{block}{TAGI-related references}\vspace{10pt}
+
+
+\begin{columns}
+\begin{column}{.15\textwidth}\centering
+\includegraphics[width=30mm]{Figures/cuTAGI_refs_QR.pdf}\\[5pt]
+\includegraphics[width=20mm]{Figures/IJF.jpg}\\[5pt]
+\includegraphics[width=22mm]{Figures/TAGI_AA_JMLR_2.png}
+\end{column}\hspace{-20mm}
+
+
+\begin{column}{.79\textwidth}
+\begin{itemize}
+\item \emph{\alert{\bf Coupling LSTM Neural Networks and SSM through Analytically Tractable Inference}},\\(Vuong, Nguyen \& Goulet, International Journal of Forecasting, 2024)
+\item \emph{Analytically tractable hidden-states inference in Bayesian neural networks}\\ (Nguyen and Goulet. Journal-to-conference track, ICLR 2024)
+\item \emph{Analytically tractable heteroscedastic uncertainty quantification in Bayesian neural networks for regression tasks}\\ (Deka, Nguyen \& Goulet. Neurocomputing, 2024)
+\item \emph{Tractable approximate Gaussian inference for Bayesian neural networks}\\ (Goulet, Nguyen, \& Amiri, JMLR, 2021)
+%\item \emph{Analytically tractable inference in deep neural networks}\\ (Nguyen and Goulet. 2021)
+%\item \emph{Analytically tractable Bayesian deep Q-Learning} (Nguyen and Goulet. 2021)
+\end{itemize}
+\end{column}
+\end{columns}
+\end{block}
+
+
 
 
 \end{column}
