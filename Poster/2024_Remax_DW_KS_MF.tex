@@ -43,6 +43,19 @@
 \graphicspath{{./Figures/}}
 \newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
 
+%TIKZ
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [circle, minimum size=2.5cm, text centered, draw=black, fill=green!30]
+\tikzstyle{process} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm, text centered, draw=black, fill=yellow!50]
+\tikzstyle{decision} = [circle, minimum size=2.5cm, text centered, draw=black, fill=red!30]
+\tikzstyle{arrow} = [thick, ->, >=stealth, line width=0.5mm, scale=2]
+\tikzstyle{process2} = [circle, minimum size=2.5cm, text centered, draw=black, fill=yellow!50]
+\tikzstyle{end} = [circle, minimum size=2.5cm, text centered, draw=black, fill=cyan!30]
+%TIKZ
+
+
 
 %%%%%%%%%
 %Beambox
@@ -80,7 +93,7 @@
 \logoright{%
 }
 %\author{Adapted from the work proposed by Nguyen \& Goulet \quad  David Wardan, Khalil Sabri, \,and\, Miquel Florensa  -- Polytechnique Montr\'{e}al, Canada}
-\author{  David Wardan, Khalil Sabri, \,and\, Miquel Florensa  -- Polytechnique Montr\'{e}al, Canada \\ \vspace{5mm} \Large (Adapted from the work proposed by Nguyen \& Goulet)}
+\author{  David Wardan, Khalil Sabri, \,and\, Miquel Florensa  -- Polytechnique Montr\'{e}al, Canada \\ \vspace{5mm} \Large Based on the work proposed by J-A. Goulet \& L. H. Nguyen}
 
 \institute[shortinst]{}
 
@@ -107,11 +120,35 @@
 %%%%%%%%%%
 \begin{column}[T]{.31\textwidth}
 
-\begin{block}{Tractable Approximate Gaussian Inference (TAGI)}
+%% Motivation
+\begin{alertblock}{\Large Tractable Approximate Gaussian Inference (TAGI)}
+\vspace{4pt}
+\begin{columns}
+\begin{column}{.5\textwidth}\vspace{23pt}
+\centering
+$$\text{Parameters}\left\{\begin{array}{rl}f(\bm\theta|\mathcal{D}) =&\displaystyle \frac{f(\mathcal{D}|\bm\theta)\,f(\bm\theta)}{f(\mathcal{D})}\\[25pt]
+=&\mathcal{N}\big(\bm{\theta};\bm{\mu}_{\bm{\theta}|\mathcal{D}},\bm{\sigma}^2_{\bm{\theta}|\mathcal{D}}\mathbf{I})\end{array}\right.$$
+$$\hspace{22.5mm}\begin{array}{r}\text{Hidden}\\\text{states}\end{array}\left\{\begin{array}{rl}~\\[-20pt]f(\bm{z}|\mathcal{D}) =&\mathcal{N}\big(\bm{z};\bm{\mu}_{\bm{Z}|\mathcal{D}},\bm{\sigma}^2_{\bm{Z}|\mathcal{D}}\mathbf{I})\\[-10pt]
+&~\end{array}\right.$$
 
-\end{block}
+
+\alert{\bf Scalable analytical Bayesian inference\\ in any neural network architecture}
+\end{column}
+\begin{column}{.5\textwidth}
 
 
+\begin{itemize}\setlength\itemsep{0.5em}
+\item Bayesian analytical inference $\left\{\begin{array}{ll} \text{parameters}\\
+\text{hidden states}\end{array}\right.$\vspace{-5.5mm}
+\item Fast and scalable $\to \mathcal{O}(n)$
+\item End-to-end treatment of uncertainty
+\item No gradient backpropagation
+\end{itemize}
+\end{column}
+\end{columns}\bigskip
+\end{alertblock}
+
+\vspace{-0.7cm}
 
 \begin{block}{TAGI - Forward uncertainty propagation}
  \begin{figure}[h!]
@@ -129,12 +166,12 @@
 \bm{z}^{(\mathtt{O})} &=  {\color{magenta}\bm{w}^{(\mathtt{L})} \bm{a}^{(\mathtt{L})}} + \bm{w}^{(\mathtt{L})} \\
 \bm{y} &=  \bm{z}^{(\mathtt{O})} + \bm{v}.
 \end{split}
-\end{equation*}
-where $\bm{v}$ are the observation noise.
+\end{equation*} 
+\ \ where $\bm{v}$ are the observation \\ \ \ noise.
 \end{column}
 
 \begin{column}{0.33\textwidth}
-{\color{magenta}Challenge 1:} GMA
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ {\color{magenta}Challenge 1:} GMA
 \vspace{1.1cm}
  \begin{figure}[h!]
  \centering
@@ -144,7 +181,7 @@ where $\bm{v}$ are the observation noise.
 
 \end{column}
 \begin{column}{0.33\textwidth}
-{\color{cyan}Challenge 2:} Locally Linearize
+\ \ \ \ \ {\color{cyan}Challenge 2:} Locally Linearize
  \begin{figure}[h!]
  \centering
   \includegraphics[width=0.8\textwidth]{Figures/Linearized_activation_fct.pdf}
@@ -152,7 +189,7 @@ where $\bm{v}$ are the observation noise.
 \end{column}
 \end{columns}
  \end{block}
-
+ 
 \begin{block}{TAGI - Backward parameter and hidden state inference}
   \begin{figure}[h!]
  \centering
@@ -196,6 +233,7 @@ f(\boldsymbol{\theta} \mid \boldsymbol{y}) &=\mathcal{N}\left(\boldsymbol{\theta
 where $\left\{\boldsymbol{\theta}^{+}, \boldsymbol{Z}^{+}\right\}$ is the short-hand notation of $\left\{\boldsymbol{\theta}^{(j+1)}, \boldsymbol{Z}^{(j+1)}\right\}$, and $\{\boldsymbol{\theta}, \boldsymbol{Z}\}$ is the short-hand notation of  $\left\{\boldsymbol{\theta}^{(j)}, \boldsymbol{Z}^{(j)}\right\}$.
 \end{block}
 
+
 \begin{block}{Regression toy example}
 \begin{columns}
 \begin{column}{0.5\textwidth}
@@ -219,13 +257,95 @@ where $\left\{\boldsymbol{\theta}^{+}, \boldsymbol{Z}^{+}\right\}$ is the short-
 %%%%%%%%%%
 \begin{column}[T]{.31\textwidth}
 
-{\Large COLUMN 2 (Remax)}
+\begin{block}{Remax - Probabilistic Softmax for uncertainty propagation}\vspace{0pt}\centering
+
+\begin{itemize}
+\item TAGI cannot use directly the softmax function: $\mathtt{softmax} (\bm{z},i)= \frac{\exp (z_i)}{\sum_j \exp (z_j)}$ since $\raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} / \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} \alert{\neq} \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}}. \text{ \raisebox{-2mm}{\includegraphics[width=12mm]{cross}}}$
+\item J-A. Goulet \& L. H. Nguyen propose probabilistic softmax by doing the division in log-transformed space.
+\item The random variable $Z$ is Lognormal if $\ln Z$ is Normal and $\exp(Z)$ is Lognormal if $Z$ is Normal.
+\item Probabilistic softmax does not work for $Z$ with high variances; $Var(Z) \approx 1$. $\text{ \raisebox{-2mm}{\includegraphics[width=12mm]{warning}}}$
+\item Alternative softmax function: $\mathtt{remax} (\bm{z},i)= \frac{\mathtt{mReLU} (z_i)}{\sum_j \mathtt{mReLU} (z_j)}$ where $\mathtt{mReLU}$ is a \textit{Mixture Rectified Linear activation Unit}.
+\item We implement $\mathtt{remax}$ function in py/cuTAGI library using C++ and CUDA.
+\end{itemize}
 
 
+
+\bigskip
+
+\begin{tikzpicture}[node distance=2cm]
+
+% Nodes
+\node (z0) [startstop] {$Z^{(\mathtt{O})}$};
+\node (mrelu) [process, right of=z0, xshift=3cm] {$\mathtt{mReLU} (M)$};
+\node (mtil) [process2, below of=mrelu, yshift=-2.5cm] {$\tilde{M}$};
+\node (lnm) [decision, right of=mrelu, xshift=3cm] {$\ln M$};
+\node (lnmtil) [decision, below of=lnm, yshift=-2.5cm] {$\ln \tilde{M}$};
+\node (ahat) [decision, right of=lnm, xshift=3cm, yshift=-2.25cm] {$\check{A}$};
+\node (a) [end, right of=ahat, xshift=3cm] {$A$};
+
+% Arrows
+\draw [arrow] (z0) -- (mrelu);
+\draw [arrow] (mrelu) -- (lnm);
+\draw [arrow] (mrelu) -- (mtil);
+\draw [arrow] (mtil) -- (lnmtil);
+\draw [arrow] (lnm) -- (ahat);
+\draw [arrow] (lnmtil) -- (ahat);
+\draw [arrow] (ahat) -- (a);
+
+\end{tikzpicture}
+\bigskip
+
+$\begin{array}{lclll}
+ {M} &=& \mathtt{mReLU}(Z^{(\mathtt{O})}) &= \mathtt{mReLU} (\raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} ) &{ \approx \! \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}}}  \;{\raisebox{-0.5mm}{\includegraphics[height=5mm]{check}}} \\[6pt]
+  \tilde{M} &=& \sum_j (M_j) &=  \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} + \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} + \dots + \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} &{ \approx \! \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}}}  \;{\raisebox{-0.5mm}{\includegraphics[height=5mm]{check}}} \\[6pt]
+ \ln {M} &=& \ln (M) &=  \ln (\raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} ) &{ \approx \! \raisebox{-1mm}{\includegraphics[height=.6cm]{log_gaussian}}}  \;{\raisebox{-0.5mm}{\includegraphics[height=5mm]{check}}} \\[6pt]
+ \ln \tilde{M} &=& \ln (\tilde{M}) &= \ln (\raisebox{-1mm}{\includegraphics[height=.8cm]{distri}} ) &{ \approx \! \raisebox{-1mm}{\includegraphics[height=.6cm]{log_gaussian}}}  \;{\raisebox{-0.5mm}{\includegraphics[height=5mm]{check}}} \\[6pt]
+\check{A} &=& \ln M - \ln \tilde{M} &= \raisebox{-1mm}{\includegraphics[height=.6cm]{log_gaussian}} - \raisebox{-1mm}{\includegraphics[height=.6cm]{log_gaussian}}  &{ \approx \! \raisebox{-1mm}{\includegraphics[height=.6cm]{log_gaussian}}}  \;{\raisebox{-0.5mm}{\includegraphics[height=5mm]{check}}} \\[6pt]
+ A &=& \exp(\check{A}) &= \exp (\raisebox{-1mm}{\includegraphics[height=.6cm]{log_gaussian}})  &{ \approx \! \raisebox{-1mm}{\includegraphics[height=.8cm]{distri}}}  \;{\raisebox{-0.5mm}{\includegraphics[height=5mm]{check}}} \\[6pt]
+\end{array}$\bigskip
+\end{block}
+
+\begin{block}{Epistemic uncertainty on classes using Remax}\vspace{0pt}\centering
+
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{0}
+        \caption*{0 predicted on MNIST.}
+    \end{minipage}\hfill
+    \begin{minipage}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{4}
+        \caption*{4 predicted on MNIST.}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{airplane}
+        \caption*{Correct prediction on CIFAR10.}
+    \end{minipage}\hfill
+    \begin{minipage}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{deer}
+        \caption*{Correct prediction on CIFAR10.}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{automobile}
+        \caption*{Correct prediction on CIFAR10.}
+    \end{minipage}\hfill
+    \begin{minipage}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{frog}
+        \caption*{Wrong prediction on CIFAR10.}
+    \end{minipage}
+\end{figure}
+
+\end{block}
 \end{column}
-
-
-
 %%%%%%%%%%
 %%% Column 3
 %%%%%%%%%%
@@ -359,7 +479,7 @@ TAGI-Remax &  9.25         &  \textbf{6.91} \\
 
 \begin{column}{.79\textwidth}
 \begin{itemize}
-\item \emph{Coupling LSTM Neural Networks and SSM through Analytically Tractable Inference},\\(Vuong, Nguyen \& Goulet, International Journal of Forecasting, 2024)
+%\item \emph{Coupling LSTM Neural Networks and SSM through Analytically Tractable Inference},\\(Vuong, Nguyen \& Goulet, International Journal of Forecasting, 2024)
 \item \emph{\bf Analytically tractable hidden-states inference in Bayesian neural networks}\\ (Nguyen and Goulet. Journal-to-conference track, ICLR 2024)
 \item \emph{Analytically tractable heteroscedastic uncertainty quantification in Bayesian neural networks for regression tasks}\\ (Deka, Nguyen \& Goulet. Neurocomputing, 2024)
 \item \emph{\bf Tractable approximate Gaussian inference for Bayesian neural networks}\\ (Goulet, Nguyen, \& Amiri, JMLR, 2021)
