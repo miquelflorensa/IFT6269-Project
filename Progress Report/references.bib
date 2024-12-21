@@ -1,7 +1,188 @@
-@misc{cutagi2022,
-  Author = {Luong-Ha Nguyen and James-A. Goulet},
-  Title = {cu{TAGI}: a {CUDA} library for {B}ayesian neural networks with Tractable Approximate {G}aussian Inference},
-  Year = {2022},
-  journal = {GitHub repository},
-  howpublished = {https://github.com/lhnguyen102/cuTAGI}
+@inproceedings{langley00,
+ author    = {P. Langley},
+ title     = {Crafting Papers on Machine Learning},
+ year      = {2000},
+ pages     = {1207--1216},
+ editor    = {Pat Langley},
+ booktitle     = {Proceedings of the 17th International Conference
+              on Machine Learning (ICML 2000)},
+ address   = {Stanford, CA},
+ publisher = {Morgan Kaufmann}
 }
+
+@TechReport{mitchell80,
+  author = 	 "T. M. Mitchell",
+  title = 	 "The Need for Biases in Learning Generalizations",
+  institution =  "Computer Science Department, Rutgers University",
+  year = 	 "1980",
+  address =	 "New Brunswick, MA",
+}
+
+@phdthesis{kearns89,
+  author = {M. J. Kearns},
+  title =  {Computational Complexity of Machine Learning},
+  school = {Department of Computer Science, Harvard University},
+  year =   {1989}
+}
+
+@Book{MachineLearningI,
+  editor = 	 "R. S. Michalski and J. G. Carbonell and T.
+		  M. Mitchell",
+  title = 	 "Machine Learning: An Artificial Intelligence
+		  Approach, Vol. I",
+  publisher = 	 "Tioga",
+  year = 	 "1983",
+  address =	 "Palo Alto, CA"
+}
+
+@Book{DudaHart2nd,
+  author =       "R. O. Duda and P. E. Hart and D. G. Stork",
+  title =        "Pattern Classification",
+  publisher =    "John Wiley and Sons",
+  edition =      "2nd",
+  year =         "2000"
+}
+
+@misc{anonymous,
+  title= {Suppressed for Anonymity},
+  author= {Author, N. N.},
+  year= {2018}
+}
+
+@InCollection{Newell81,
+  author =       "A. Newell and P. S. Rosenbloom",
+  title =        "Mechanisms of Skill Acquisition and the Law of
+                  Practice", 
+  booktitle =    "Cognitive Skills and Their Acquisition",
+  pages =        "1--51",
+  publisher =    "Lawrence Erlbaum Associates, Inc.",
+  year =         "1981",
+  editor =       "J. R. Anderson",
+  chapter =      "1",
+  address =      "Hillsdale, NJ"
+}
+
+
+@Article{Samuel59,
+  author = 	 "A. L. Samuel",
+  title = 	 "Some Studies in Machine Learning Using the Game of
+		  Checkers",
+  journal =	 "IBM Journal of Research and Development",
+  year =	 "1959",
+  volume =	 "3",
+  number =	 "3",
+  pages =	 "211--229"
+}
+
+@Article{goulet2020tractable,
+  author = "Goulet, James-A and Nguyen, Luong Ha and Amiri, Saeid",
+  title = "Tractable Approximate Gaussian Inference for Bayesian Neural Networks",
+  journal = "Journal of Machine Learning Research",
+  year = "2021"
+}
+
+
+@InProceedings{gal16,
+  title = 	 {Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning},
+  author = 	 {Gal, Yarin and Ghahramani, Zoubin},
+  booktitle = 	 {Proceedings of The 33rd International Conference on Machine Learning},
+  pages = 	 {1050--1059},
+  year = 	 {2016},
+  editor = 	 {Balcan, Maria Florina and Weinberger, Kilian Q.},
+  volume = 	 {48},
+  series = 	 {Proceedings of Machine Learning Research},
+  address = 	 {New York, New York, USA},
+  month = 	 {20--22 Jun},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v48/gal16.pdf},
+  url = 	 {https://proceedings.mlr.press/v48/gal16.html},
+  abstract = 	 {Deep learning tools have gained tremendous attention in applied machine learning. However such tools for regression and classification do not capture model uncertainty. In comparison, Bayesian models offer a mathematically grounded framework to reason about model uncertainty, but usually come with a prohibitive computational cost. In this paper we develop a new theoretical framework casting dropout training in deep neural networks (NNs) as approximate Bayesian inference in deep Gaussian processes. A direct result of this theory gives us tools to model uncertainty with dropout NNs – extracting information from existing models that has been thrown away so far. This mitigates the problem of representing uncertainty in deep learning without sacrificing either computational complexity or test accuracy. We perform an extensive study of the properties of dropout’s uncertainty. Various network architectures and non-linearities are assessed on tasks of regression and classification, using MNIST as an example. We show a considerable improvement in predictive log-likelihood and RMSE compared to existing state-of-the-art methods, and finish by using dropout’s uncertainty in deep reinforcement learning.}
+}
+
+@inproceedings{well11,
+  added-at = {2019-04-03T00:00:00.000+0200},
+  author = {Welling, Max and Teh, Yee Whye},
+  biburl = {https://www.bibsonomy.org/bibtex/2f5ff37ac41677e6453ed602dae088478/dblp},
+  booktitle = {ICML},
+  crossref = {conf/icml/2011},
+  editor = {Getoor, Lise and Scheffer, Tobias},
+  ee = {https://icml.cc/2011/papers/398_icmlpaper.pdf},
+  interhash = {5c8207b828c210fb5283c258720164ee},
+  intrahash = {f5ff37ac41677e6453ed602dae088478},
+  keywords = {dblp},
+  pages = {681-688},
+  publisher = {Omnipress},
+  timestamp = {2019-04-04T11:48:16.000+0200},
+  title = {Bayesian Learning via Stochastic Gradient Langevin Dynamics.},
+  url = {http://dblp.uni-trier.de/db/conf/icml/icml2011.html#WellingT11},
+  year = 2011
+}
+
+@article{neal12,
+  title={MCMC using Hamiltonian dynamics},
+  author={Neal, Radford M},
+  journal={arXiv preprint arXiv:1206.1901},
+  year={2012}
+}
+
+
+@InProceedings{blundell15,
+  title = 	 {Weight Uncertainty in Neural Network},
+  author = 	 {Blundell, Charles and Cornebise, Julien and Kavukcuoglu, Koray and Wierstra, Daan},
+  booktitle = 	 {Proceedings of the 32nd International Conference on Machine Learning},
+  pages = 	 {1613--1622},
+  year = 	 {2015},
+  editor = 	 {Bach, Francis and Blei, David},
+  volume = 	 {37},
+  series = 	 {Proceedings of Machine Learning Research},
+  address = 	 {Lille, France},
+  month = 	 {07--09 Jul},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v37/blundell15.pdf},
+  url = 	 {https://proceedings.mlr.press/v37/blundell15.html},
+  abstract = 	 {We introduce a new, efficient, principled and backpropagation-compatible algorithm for learning a probability distribution on the weights of a neural network, called Bayes by Backprop. It regularises the weights by minimising a compression cost, known as the variational free energy or the expected lower bound on the marginal likelihood. We show that this principled kind of regularisation yields comparable performance to dropout on MNIST classification. We then demonstrate how the learnt uncertainty in the weights can be used to improve generalisation in non-linear regression problems, and how this weight uncertainty can be used to drive the exploration-exploitation trade-off in reinforcement learning.}
+}
+
+@inproceedings{NIPS2017,
+ author = {Lakshminarayanan, Balaji and Pritzel, Alexander and Blundell, Charles},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
+ pages = {},
+ publisher = {Curran Associates, Inc.},
+ title = {Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2017/file/9ef2ed4b7fd2c810847ffa5fa85bce38-Paper.pdf},
+ volume = {30},
+ year = {2017}
+}
+
+@inproceedings{NIPS2011,
+ author = {Graves, Alex},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {J. Shawe-Taylor and R. Zemel and P. Bartlett and F. Pereira and K.Q. Weinberger},
+ pages = {},
+ publisher = {Curran Associates, Inc.},
+ title = {Practical Variational Inference for Neural Networks},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2011/file/7eb3c8be3d411e8ebfab08eba5f49632-Paper.pdf},
+ volume = {24},
+ year = {2011}
+}
+
+
+@InProceedings{hobbhahn22a,
+  title = 	 {Fast predictive uncertainty for classification with Bayesian deep networks},
+  author =       {Hobbhahn, Marius and Kristiadi, Agustinus and Hennig, Philipp},
+  booktitle = 	 {Proceedings of the Thirty-Eighth Conference on Uncertainty in Artificial Intelligence},
+  pages = 	 {822--832},
+  year = 	 {2022},
+  editor = 	 {Cussens, James and Zhang, Kun},
+  volume = 	 {180},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {01--05 Aug},
+  publisher =    {PMLR},
+  pdf = 	 {https://proceedings.mlr.press/v180/hobbhahn22a/hobbhahn22a.pdf},
+  url = 	 {https://proceedings.mlr.press/v180/hobbhahn22a.html},
+  abstract = 	 {In Bayesian Deep Learning, distributions over the output of classification neural networks are often approximated by first constructing a Gaussian distribution over the weights, then sampling from it to receive a distribution over the softmax outputs. This is costly. We reconsider old work (Laplace Bridge) to construct a Dirichlet approximation of this softmax output distribution, which yields an analytic map between Gaussian distributions in logit space and Dirichlet distributions (the conjugate prior to the Categorical distribution) in the output space.  Importantly, the vanilla Laplace Bridge comes with certain limitations. We analyze those and suggest a simple solution that compares favorably to other commonly used estimates of the softmax-Gaussian integral. We demonstrate that the resulting Dirichlet distribution has multiple advantages, in particular, more efficient computation of the uncertainty estimate and scaling to large datasets and networks like ImageNet and DenseNet.  We further demonstrate the usefulness of this Dirichlet approximation by using it to construct a lightweight uncertainty-aware output ranking for ImageNet. }
+}
+
+
+

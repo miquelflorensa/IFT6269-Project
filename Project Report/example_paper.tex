@@ -24,6 +24,9 @@
 % Attempt to make hyperref and algorithmic work together better:
 \newcommand{\theHalgorithm}{\arabic{algorithm}}
 
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
 % Use the following line for the initial blind version submitted for review:
 %\usepackage{icml2018_ift6269}
 
@@ -78,6 +81,8 @@
 \icmlcorrespondingauthor{Cieua Vvvvv}{c.vvvvv@googol.com}
 \icmlcorrespondingauthor{Eee Pppp}{ep@eden.co.uk}
 
+
+
 % You may provide any keywords that you
 % find helpful for describing your paper; these are used to populate
 % the "keywords" metadata in the PDF but will not be shown in the document
@@ -105,7 +110,7 @@ Gross violations will trigger corrections at the camera-ready phase.
 
 \section{Introduction}\label{sec:intro}
 
-In recent years, deep learning has achieved remarkable success across a wide range of classification tasks, including image recognition, natural language processing, and medical diagnosis \cite{lecun2015deep}. Despite their high predictive accuracy, traditional neural networks often operate as black boxes, providing point estimates without quantifying the uncertainty associated with their predictions. This limitation poses significant challenges, especially in safety-critical applications such as autonomous driving, healthcare, and financial decision-making, where understanding the confidence of predictions is crucial for reliable and trustworthy outcomes \cite{kendall2017uncertainties}. Uncertainty estimation in neural networks addresses this challenge by providing measures of confidence alongside predictions. Bayesian Neural Networks (BNNs) offer a principled framework for uncertainty estimation by treating model parameters as random variables and capturing their posterior distribution \cite{blundell15}. By integrating over the uncertainty in the model parameters, BNNs can provide more robust predictions and better generalize to unseen data. However, exact Bayesian inference in neural networks is intractable due to the high dimensionality and complexity of the parameter space, necessitating the development of approximate inference methods. Several approaches have been proposed to approximate the posterior distribution in BNNs, each with its own set of advantages and limitations. Sampling-based methods like Stochastic Gradient Langevin Dynamics (SGLD) \cite{well11} and Hamiltonian Monte Carlo (HMC) \cite{neal12} provide accurate posterior approximations but are often computationally expensive and challenging to scale to large networks. On the other hand, approximation techniques such as Monte Carlo Dropout (MC Dropout) \cite{gal16} and Deep Ensembles \cite{lakshminarayanan17} offer more computationally feasible alternatives but may lack the theoretical rigor and flexibility to capture complex posterior distributions fully. Variational Inference (VI) methods, including Bayesian Backpropagation (BBP) \cite{blundell15}, strike a balance between scalability and accuracy but are constrained by the choice of variational families, which may oversimplify the true posterior. Despite these advancements, existing methods often face trade-offs between computational efficiency, scalability, and the fidelity of uncertainty estimates. In particular, many approaches rely on assumptions such as Gaussianity in the parameter or output space, which may not hold in practice, especially for complex and high-dimensional data distributions. Additionally, the computational overhead associated with sampling-based methods limits their applicability to large-scale classification tasks, prompting the need for more efficient inference techniques.
+In recent years, deep learning has achieved remarkable success across a wide range of classification tasks, including image recognition, natural language processing, and medical diagnosis \cite{lecun2015deep}. Despite their high predictive accuracy, traditional neural networks often operate as black boxes, providing point estimates without quantifying the uncertainty associated with their predictions. This limitation poses significant challenges, especially in safety-critical applications such as autonomous driving, healthcare, and financial decision-making, where understanding the confidence of predictions is crucial for reliable and trustworthy outcomes \cite{kendall2017uncertainties}. Uncertainty estimation in neural networks addresses this challenge by providing measures of confidence alongside predictions. Bayesian Neural Networks (BNNs) offer a principled framework for uncertainty estimation by treating model parameters as random variables and capturing their posterior distribution \cite{blundell15}. By integrating over the uncertainty in the model parameters, BNNs can provide more robust predictions and better generalize to unseen data. However, exact Bayesian inference in neural networks is intractable due to the high dimensionality and complexity of the parameter space, necessitating the development of approximate inference methods. Several approaches have been proposed to approximate the posterior distribution in BNNs, each with its own set of advantages and limitations. Sampling-based methods like Stochastic Gradient Langevin Dynamics (SGLD) \cite{} and Hamiltonian Monte Carlo (HMC) \cite{neal12} provide accurate posterior approximations but are often computationally expensive and challenging to scale to large networks. On the other hand, approximation techniques such as Monte Carlo Dropout (MC Dropout) \cite{gal16} and Deep Ensembles \cite{lakshminarayanan17} offer more computationally feasible alternatives but may lack the theoretical rigor and flexibility to capture complex posterior distributions fully. Variational Inference (VI) methods, including Bayesian Backpropagation (BBP) \cite{blundell15}, strike a balance between scalability and accuracy but are constrained by the choice of variational families, which may oversimplify the true posterior. Despite these advancements, existing methods often face trade-offs between computational efficiency, scalability, and the fidelity of uncertainty estimates. In particular, many approaches rely on assumptions such as Gaussianity in the parameter or output space, which may not hold in practice, especially for complex and high-dimensional data distributions. Additionally, the computational overhead associated with sampling-based methods limits their applicability to large-scale classification tasks, prompting the need for more efficient inference techniques.
 
 In this work, we implement a novel method that leverages Tractable Approximate Gaussian Inference (TAGI) to provide efficient and scalable uncertainty estimation in Bayesian Deep Networks. TAGI offers an to sampling-based approaches by maintaining and updating approximate Gaussian distributions over network parameters, enabling the propagation of uncertainty through deep learning models seamlessly. Furthermore, we propose a probabilistic softmax formulation that translates the uncertainty from the logit space to the output space, allowing for accurate and computationally efficient uncertainty estimates in classification tasks.
 
@@ -263,6 +268,145 @@ where $\left\{\boldsymbol{\theta}^{+}, \boldsymbol{Z}^{+}\right\}$ is the short-
 While this section only introduces the TAGI method for a simple feedforward neural network, this method is applicable for any NN architectures that are already developed. This is because the difference between TAGI-NN and traditional NN models is the parameter update mechanism but the architecture is unchanged.
 
 I NEED TO FURTHER ADD WHY THE ASSUMPTIONS HOLD.
+
+\section{Probabilistic Softmax}
+
+In this section we will present how the current classification in TAGI is performed, we will present a probabilistic softmax formulation and a new Remax activation.
+
+\subsection{Classification with TAGI}\label{sub:classification_tagi}
+
+TAGI addresses classification tasks through a hierarchical binary tree structure, where each class is uniquely represented as a path in the tree. The tree’s height is given by $\mathtt{H} = \lceil \log_2(\mathtt{K}) \rceil$, and the number of hidden states is $\mathtt{Y} = \mathtt{K} - 1$, provided $\log_2(\mathtt{K}) \in \mathbb{Z}^+$.
+
+For instance, when $\mathtt{K} = 8$, the hierarchical decomposition results in $\mathtt{H} = 3$ layers, where each class $y_{\mathcal{C}}^{(\mathtt{C})}$ is uniquely identified by a binary sequence $\mathcal{C} = \{j, k, l\} \in \{0, 1\}^3$, corresponding to the indices of the path in the tree.
+
+This approach reformulates the classification task as a regression problem, eliminating the need for a softmax activation function. However, the current implementation has limitations in capturing epistemic uncertainty effectively, as it enforces constraints on the probabilities of each hidden state to remain within the interval $[0,1]$. Although a solution to this issue has been proposed by the authors, it has not yet been implemented.
+
+Additionally, directly applying the softmax function is impractical in this context because leveraging uncertainty requires a probabilistic representation rather than a deterministic one. This work aims to address these challenges by implementing and evaluating the probabilistic softmax framework previously proposed by the authors, which is expected to overcome the limitations of the current implementation.
+
+\subsection{Closed-form softmax using a log-transformation}
+
+In neural networks, the softmax function is commonly defined as:
+\begin{equation}
+\text{softmax}(\bm{z},i) = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
+\end{equation}
+While effective in standard implementations, this function poses challenges in the context of Tractable Approximate Gaussian Inference (TAGI) \cite{goulet2020tractable}. Specifically, performing this operation within TAGI requires dividing two Gaussian-distributed variables. However, the result of such a division does not follow a Gaussian distribution, which disrupts the probabilistic consistency of the framework.
+
+To address this limitation, the authors of TAGI \cite{goulet2020tractable} proposed a novel approach to adapt the softmax function for probabilistic contexts where  $z_i$  follows a Gaussian distribution. The method leverages a log-normal transformation to ensure mathematical tractability. By matching the moments of the neural network’s output in the log-normalized space, the division inherent to the softmax function can be reformulated as a subtraction between log-normal distributions. Subsequently, the moments of the resulting subtraction are remapped to a Gaussian distribution, preserving the probabilistic framework.This adaptation enables the application of softmax within TAGI while maintaining the Gaussian assumptions.
+
+For hidden units $\bm{Z}\sim\mathcal{N}(\bm{z};\bm{\mu}_{\bm{Z}},\bm{\sigma}_{\bm{Z}}^2\cdot \mathbf{I})$ such that $\bm{z}\in \mathbb{R}^\mathtt{Z}$, then taking the exponential function of $z_i$ leads to a lognormal distribution
+\begin{equation}
+\begin{array}{rcll}
+E=\exp(Z)&\sim& \ln\mathcal{N}(e;\mu_{Z},\sigma_{Z})\\[2pt]
+\mu_E&=&\exp\big(\mu_Z+\tfrac{1}{2}\sigma_Z^2\big)\\[2pt]
+\sigma_E^2&=&\exp\big(2\mu_Z+\sigma_Z^2\big)\cdot\big(\exp(\sigma_Z^2)-1\big),
+\end{array}
+\end{equation}
+where the covariance between $Z_i$ and $E_i$ is
+\begin{equation} 
+\begin{array}{rcl}
+\text{cov}(Z,E)&=&\sigma_Z^2\cdot\mu_E.
+\end{array}
+\end{equation}
+Given that $Z_i\independent Z_j,\forall i\neq j$, the sum on the softmax's denominator $\tilde{E}$ is modelled by a Gaussian R.V., 
+\begin{equation}
+\begin{array}{rcl}
+\sum_j E_j=\tilde{E}&\sim&\mathcal{N}(\tilde{e};\mu_{\tilde{E}},\sigma_{\tilde{E}}^2)\\[2pt]
+\mu_{\tilde{E}}&=&\sum_j \mu_{E,j}\\[2pt]
+\sigma_{\tilde{E}}^2&=&\sum_j \sigma_{E,j}^2.
+\end{array}
+\end{equation}
+Given the independence hypothesis between hidden units the covariance and coefficient of correlation between the softmax's numerator and denominator are only influenced by the presence of a same variable $E_i$ in both terms so that, 
+\begin{equation}
+\text{cov}\big(E_i,\tilde{E}\big)=\sigma_{E_i}^2
+\end{equation}
+
+For a lognormal random variable $X$, the relations between the R.V.'s moments and the moment in the log-transformed space $\lambda$ and $\zeta$ are
+\begin{equation}
+X\sim\ln\mathcal{N}(x;\lambda,\zeta)\left\{\begin{array}{rcl}
+\zeta&=&\sqrt{\ln\big(1+\frac{\sigma_X^2}{\mu_X^2}\big)}\\[2pt]
+\lambda&=&\ln \mu_X-\tfrac{1}{2}\zeta^2.
+\end{array}\right.
+\end{equation}
+Using these relations, we can obtain the softmax's denominator in the log-transformed space so that we can replace the division by a substraction,
+\begin{equation}
+\begin{array}{rcl}
+\ln \tilde{E}&\sim&\ln\mathcal{N}(\ln{e};\mu_{\ln{E}},\sigma_{\ln{E}})\\[2pt]
+\sigma_{\ln{E}}^2&=&\ln\big(1+\frac{\sigma_{\tilde{E}}^2}{\mu_{\tilde{E}}^2}\big)\\[4pt]
+\mu_{\ln{E}}&=&\ln\mu_{\tilde{E}}-\tfrac{1}{2}\sigma_{\ln{E}}^2.
+\end{array}
+\end{equation}
+The covariance between the softmax's numerator and denominator in the log-transformed space is 
+\begin{equation}
+\label{eq_cov_z_e_check}
+\begin{array}{rcl}
+\text{cov}\big(\ln E_i,\ln \tilde{E}\big)=\ln\big(1+\text{cov}\big(E_i,\tilde{E}\big)\cdot\frac{1}{\mu_{E,i}}\cdot \frac{1}{\mu_{\tilde{E}}}\big).   
+\end{array}
+\end{equation}
+The $i$-th attention unit in the log-space $\check{A}_i=\ln{E}_i-\ln \tilde{E}$ defines a lognormal R.V. $A_i=\exp(\check{A}_i)$ so that
+\begin{equation}
+\label{eq_log_act}
+\begin{array}{rcl}
+A_i&\sim&\ln\mathcal{N}(\check{a}_i;{\mu}_{\check{A},i},{\sigma}_{\check{A},i})\\[2pt]
+\mu_{\check{A},i}&=&\mu_{\ln{E},i}-\mu_{\ln \tilde{E}}\\[2pt]
+\sigma_{\check{A},i}^2&=&\sigma_{\ln{E},i}^2+\sigma_{\ln \tilde{E}}^2-2\text{cov}\big(\ln E_i,\ln \tilde{E}\big).
+\end{array}
+\end{equation}
+The covariance between $\check{A}_i$ and $\ln E_i$ is given by
+\begin{equation}
+\text{cov}(\check{A}_i,Z_i)=\sigma_{\ln E,i}^2-\text{cov}\big(\ln E_i,\ln \tilde{E}\big).
+\end{equation}
+\noindent The moments of the lognormal variable $A_i$ are
+\begin{equation}
+\label{eq_act}
+\begin{array}{rcl}
+\mu_{{A},i}&=&\exp(\mu_{\check{A},i}+\tfrac{1}{2}\sigma_{\check{A},i}^2)\\[2pt]
+\sigma_{{A},i}^2&=&\mu_{{A},i}^2\big(\exp(\sigma_{\check{A},i}^2)-1\big)
+\end{array}\end{equation}
+In order to employ attention units with Gaussian inference, we use the approximation that $A_i$ is Gaussian with
+$$A_i\sim\mathcal{N}(a_i;\mu_{{A},i},\sigma_{{A},i}^2),$$
+with the assumption that  $A_i\independent A_j,\forall i\neq j$. The regression coefficient $\beta_{\check{A}|A}$ expressing the linear relationship between $\tilde{A}_i$ and $A_i$ is given by
+\begin{equation}
+\beta_{A|\check{A}}=\frac{\text{cov}(\check{A}_i,A_i)}{\sigma_{\check{A},i}^2},
+\end{equation}
+so that the covariance between $A_i$ and $Z_i$ is 
+\begin{equation}
+\begin{array}{rcl}
+\text{cov}(A_i,Z_i)&=&\frac{\text{cov}(\check{A}_i,A_i)}{\sigma_{\check{A},i}^2}\cdot\text{cov}(\check{A}_i,Z_i)\\[4pt]
+&=&\exp(\mu_{\check{A},i}+\tfrac{1}{2}\sigma_{\check{A},i}^2)\cdot\text{cov}(\check{A}_i,Z_i).\end{array}
+\end{equation}
+
+\subsection{Remax}
+The authors of the formulation  Goulet and Nguyen observed through experimentation and comparison of the probabilistic softmax with results obtained via Monte Carlo sampling that high variance values $(\sigma^2 \approx 1)$ can lead to exploding gradients. To mitigate this issue, they proposed replacing the exponential function with a novel activation function, termed the \emph{Mixture Rectified Linear activation Unit} (Mixture ReLU).
+
+The concept behind the \emph{Mixture Rectified Linear activation Unit} is to propagate the hidden unit's uncertainty $Z\sim\mathcal{N}(\mu_Z,\sigma_Z^2)$ through a ReLU $\phi_\mathtt{R}(z)=\max(0,z)$ by using a Gaussian mixture between a truncated Gaussian and a zero-valued component. The expected value of the Gaussian PDF of $\tilde{Z}$ truncated at $z\geq0$ are
+\begin{equation}
+ \begin{array}{rclll}
+ \phi_\mathtt{R}(z)&=&\max(0,z)\\[2pt]
+
+\mu_A &=&\mu_Z\cdot\Phi\left(\frac{\mu_Z}{\sigma_Z}\right)+\sigma_Z \cdot \varphi\left(\frac{\mu_Z}{\sigma_Z}\right)\\[6pt]
+\sigma_A^2 &=&   -\mu_A^2 + 2\mu_A\mu_Z  - \mu_Z\sigma_Z \phi\left(\frac{{\mu_Z}}{{\sigma_Z}}\right) \\
+ && + \left(\sigma_Z^2-\mu_Z^2\right)\Phi\left(\frac{{\mu_Z }}{{\sigma_Z}}\right)\\[6pt]
+  \text{cov}(A,Z)&=& \sigma_Z^2\Phi\left(\frac{\mu_Z}{\sigma_Z}\right) \\[6pt] 
+\end{array}
+\end{equation}
+
+Then, the remax activation function is defined as
+\begin{equation}
+\text{remax}(\bm{z},i)=\frac{\text{mrelu}(z_i)}{\sum_j \text{mrelu}(z_j)}.
+\end{equation}
+All the calculations remain the same as for the probabilistic softmax but instead of $E = \exp(Z)$, we will have $$\bm{M}\sim\mathcal{N}(\bm{m};\bm{\mu}_{\bm{M}},\bm{\sigma}_{\bm{M}}^2\cdot \mathbf{I})=\text{mrelu}(\bm{Z}).$$
+
+Then, the convariance between $A_i$ and $Z_i$ is 
+\begin{equation}
+\begin{array}{rcl}
+\text{cov}(A_i,Z_i)&=&\frac{\text{cov}(\check{A}_i,A_i)}{\sigma_{\check{A},i}^2}\cdot \frac{\text{cov}(\check{A}_i,M_i)}{\sigma^{2}_{M, i}}\cdot\text{cov}(M_i,Z_i)\\[4pt]
+&=&\exp(\mu_{\check{A},i}+\tfrac{1}{2}\sigma_{\check{A},i}^2) \\
+&& \cdot\frac{\text{cov}(\check{A}_i,M_i) \cdot\text{cov}(M_i,Z_i)}{\sigma^{2}_{M, i}}.\end{array}
+\end{equation}
+
+ \section{Remax results}
+
+
 
 \section{Electronic Submission}
 \label{submission}
@@ -448,7 +592,8 @@ have shown \ldots'').
 
 Do not anonymize citations in the reference section. The only exception are manuscripts that are
 not yet published (e.g., under submission). If you choose to refer to
-such unpublished manuscripts \cite{anonymous}, anonymized copies have
+such unpublished manuscripts %\cite{anonymous}
+, anonymized copies have
 to be submitted
 as Supplementary Material via CMT\@. However, keep in mind that an ICML
 paper should be self contained and should contain sufficient detail
