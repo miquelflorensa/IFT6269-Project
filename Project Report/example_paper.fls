@@ -896,6 +896,9 @@ INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.de
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+INPUT ./example_paper.aux
+INPUT example_paper.aux
+INPUT example_paper.aux
 OUTPUT example_paper.aux
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/microtype/mt-ptm.cfg

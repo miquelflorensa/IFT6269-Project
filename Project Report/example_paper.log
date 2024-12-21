@@ -579,8 +579,7 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count329
 \l__pdf_internal_box=\box71
-)
-No file example_paper.aux.
+) (./example_paper.aux)
 \openout1 = `example_paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
@@ -617,7 +616,7 @@ LaTeX Info: Redefining \showhyphens on input line 41.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-(/usr/local/texlive/2023/texmf-dist/tex/latex/microtype/mt-ptm.cfg
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 ) (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -926,63 +925,14 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 
 Package natbib Warning: Citation `langley00' undefined on input line 862.
 
-(./example_paper.bbl
-Underfull \hbox (badness 1668) in paragraph at lines 31--35
-[]\OT1/ptm/m/n/10 (+20) Graves, A.  Prac-ti-cal vari-a-tional in-fer-ence for neu-
- []
+(./example_paper.bbl)
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \hbox (badness 3138) in paragraph at lines 31--35
-\OT1/ptm/m/n/10 (+20) ral net-works.  In Shawe-Taylor, J., Zemel, R.,
- []
-
-
-Underfull \hbox (badness 5667) in paragraph at lines 31--35
-\OT1/ptm/m/it/10 (+20) Ad-vances in Neu-ral In-for-ma-tion Pro-cess-ing Sys-
- []
-
-
-Underfull \hbox (badness 3049) in paragraph at lines 31--35
-\OT1/ptm/m/it/10 (+20) tems\OT1/ptm/m/n/10 (+20) , vol-ume 24. Cur-ran As-so-ciates, Inc., 2011.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 31--35
-\OT1/ptm/m/n/10 (+20) URL [][]$\OT1/pcr/m/n/10 https : / / proceedings . neurips .
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 31--35
-\OT1/pcr/m/n/10 cc / paper _ files / paper / 2011 / file /
- []
-
-
-Overfull \hbox (5.12251pt too wide) in paragraph at lines 31--35
-\OT1/pcr/m/n/10 7eb3c8be3d411e8ebfab08eba5f49632-[]Paper .
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 48--52
-\OT1/pcr/m/n/10 cc / paper _ files / paper / 2017 / file /
- []
-
-
-Overfull \hbox (5.42252pt too wide) in paragraph at lines 48--52
-\OT1/pcr/m/n/10 9ef2ed4b7fd2c810847ffa5fa85bce38-[]Paper .
- []
-
-[10])
 
 Package natbib Warning: There were undefined citations.
 
-[11
-
-] (./example_paper.aux
-
-Package natbib Warning: Citation(s) may have changed.
-(natbib)                Rerun to get citations correct.
-
-)
+[10] (./example_paper.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -999,18 +949,18 @@ Package rerunfilecheck Info: Checksums for `example_paper.out':
 (rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 24916 strings out of 476025
- 451922 string characters out of 5790017
+ 24836 strings out of 476025
+ 450750 string characters out of 5790017
  1926388 words of memory out of 5000000
- 44451 multiletter control sequences out of 15000+600000
- 569300 words of font info for 335 fonts, out of 8000000 for 9000
+ 44405 multiletter control sequences out of 15000+600000
+ 567978 words of font info for 322 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,16n,89p,2984b,985s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on example_paper.pdf (11 pages, 365967 bytes).
+Output written on example_paper.pdf (10 pages, 354435 bytes).
 PDF statistics:
- 308 PDF objects out of 1000 (max. 8388607)
- 239 compressed objects within 3 object streams
- 89 named destinations out of 1000 (max. 500000)
+ 267 PDF objects out of 1000 (max. 8388607)
+ 200 compressed objects within 2 object streams
+ 72 named destinations out of 1000 (max. 500000)
  87570 words of extra memory for PDF output out of 89155 (max. 10000000)
 
