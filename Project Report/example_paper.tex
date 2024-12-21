@@ -408,6 +408,191 @@ Then, the convariance between $A_i$ and $Z_i$ is
 
 
 
+
+
+
+\section{Comparative Analysis: TAGI vs. Torch}\label{sec:tagi_vs_torch}
+
+In this section, we present a comprehensive comparison between the Tractable Approximate Gaussian Inference (TAGI) framework and a standard Torch-based backpropagation approach. Our analysis focuses on various aspects including overall performance, the impact of batch size, network depth, network size, the effect of the parameter $\sigma_v$ on TAGI, and training time considerations. We highlight key findings using a combination of summary tables and selected figures. In addition, we incorporate results from our new TAGI-Remax implementation. While it often converged reliably and performed similarly on average to TAGI-HRC, it rarely achieved the absolute lowest error rates across experiments, suggesting that its stability does not always translate into peak performance.
+
+\subsection{Overall Performance}
+Across all experiments, TAGI consistently demonstrated better average performance in terms of test error compared to Torch. This advantage is most pronounced when increasing the number of layers in the network. While Torch-based models struggled to converge or exhibited deteriorated performance with deeper networks (particularly in convolutional neural networks without batch normalization), TAGI maintained relatively stable error rates. This robustness suggests that TAGI may be less sensitive to architectural complexities and can effectively handle deeper networks without requiring additional normalization techniques.
+
+The TAGI-Remax implementation followed a similar trend to TAGI-HRC in terms of average performance. As shown in Table~\ref{tab:overall_performance}, it also outperformed Torch in terms of test error. Although TAGI-Remax generally converged well, it did not frequently yield the absolute best results, indicating that while it is stable, it may not always produce the lowest achievable error.
+
+% Overall Average Performance
+\begin{table}[h]
+\centering
+\caption{Overall Average Training and Test Error Rates (\%) across Frameworks}
+\label{tab:overall_performance}
+\begin{small}
+\begin{tabular}{lcc}
+\toprule
+Framework & Avg. Training Error & Avg. Test Error \\
+\midrule
+Torch      & 10.05 & 10.69 \\
+TAGI-HRC   & 7.07  & \textbf{7.73}  \\
+TAGI-Remax & 7.14  & \textbf{7.78}  \\
+\bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+The best overall performance was achieved by TAGI-HRC CNNs with three layers, 32 channels, and a sigma value of 0.5. Notably, the top experiments consistently featured TAGI-HRC CNNs rather than CNNs with batch normalization, highlighting TAGI's capability to deliver superior results without relying on normalization techniques. TAGI-Remax also benefited from similar settings, although it did not surpass the best TAGI-HRC configurations.
+
+\subsection{Effect of Batch Size}
+We observed a clear divergence in how each framework responds to varying batch sizes. Torch-based models tended to perform better with larger batch sizes, often relying on more stable gradient estimates to train effectively. Conversely, TAGI excelled with smaller batch sizes, where it could achieve remarkably low test errors even as network depth increased. This pattern is particularly striking in CNNs without batch normalization layers, where Torch's performance with smaller batch sizes was notably poor, while TAGI thrived under such conditions.
+
+Interestingly, TAGI-Remax differed slightly from TAGI-HRC in terms of batch size sensitivity. While TAGI-HRC performed best with smaller batch sizes, TAGI-Remax appeared more flexible, showing stable performance across a range of batch sizes without a strong preference toward smaller batches.
+
+% Impact of Batch Size
+\begin{table}[h]
+\centering
+\caption{Test Error Rates (\%) by Batch Size and Framework (FNN and CNN only)}
+\label{tab:batch_size_impact}
+\begin{small}
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{Small Batch (16)} & \multicolumn{2}{c}{Large Batch (512)} \\
+Framework & FNN & CNN & FNN & CNN \\
+\midrule
+Torch      &  9.31 & 31.20 &  \textbf{5.03} & 16.22 \\
+TAGI-HRC   & 10.42 & \textbf{1.74} & 12.14 & 15.99 \\
+TAGI-Remax &  9.14 &  7.30 &  7.02 &  5.43 \\
+\bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+\subsection{Effect of Batch Normalization}
+We explore here the impact of batch normalization and batch size on test error rates for both frameworks. Torch-based models exhibited superior performance in CNNs with batch normalization, particularly with larger batch sizes, where they achieved the lowest test error rates. In contrast, TAGI demonstrated remarkable consistency and robustness with smaller batch sizes, regardless of whether batch normalization was applied. Interestingly, in TAGI experiments, CNNs without batch normalization performed slightly better than their batch-normalized counterparts, highlighting that lower batch sizes are a more significant factor for TAGI's performance than applying batch normalization.
+
+For TAGI-Remax, a similar pattern emerged. Batch normalization did not provide a clear advantage, and good performance often came from configurations without it. This parallels the original TAGI-HRC results, suggesting that both TAGI-HRC and TAGI-Remax benefit more from careful selection of batch sizes than from normalization techniques.
+
+% Impact of Batch Normalization
+\begin{table}[h]
+\centering
+\caption{Test Error Rates (\%) by Batch Size, Batch Normalization, and Framework (CNN only)}
+\label{tab:batch_norm_batch_size_impact}
+\begin{small}
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{Small Batch (16)} & \multicolumn{2}{c}{Large Batch (512)} \\
+Framework & With BN & W.o BN & With BN & W.o BN \\
+\midrule
+Torch      & \textbf{1.35} & 31.20 & \textbf{1.06} & 16.22 \\
+TAGI-HRC   &  1.97         & \textbf{1.74} & 4.11 & 15.99 \\
+TAGI-Remax & 12.05         &  7.30         & 5.75 &  5.43 \\
+\bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+
+\subsection{Influence of Network Depth}
+Depth-sensitive behavior was a crucial point of differentiation. As the number of layers increased, Torch-based CNNs (without batch normalization) struggled to converge, resulting in significantly higher test errors. In contrast, TAGI-HRC remained relatively stable, offering effective training and lower test errors even with deeper architectures. This is a key finding, suggesting TAGI-HRC’s potential to alleviate the commonly observed training difficulties associated with very deep neural networks.
+
+TAGI-Remax followed a similar trajectory to TAGI-HRC in this regard. While it did not consistently achieve the absolute lowest errors, it also did not succumb to the performance degradation seen with Torch models as the network depth increased. This indicates that the core resilience to depth-related training issues is preserved in the TAGI-Remax implementation.
+
+% FIGURE: Test Error by Number of Layers
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\linewidth]{Figures/num_layers_test_error.png}
+\caption{Test Error Rate by Number of Layers for TAGI-HRC vs. Torch. TAGI-HRC maintains low error rates as depth increases, while Torch performance degrades significantly with deeper networks (especially CNNs without batch normalization).}
+\label{fig:num_layers_comparison}
+\end{figure}
+
+\subsection{Effect of \texorpdfstring{$\sigma_v$}{sigma\_v} in TAGI}
+The parameter $\sigma_v$ plays a pivotal role in TAGI’s performance. Our experiments indicate that higher values of $\sigma_v$ (e.g., $\sigma_v = 1.0$) yield better results, while a lower value (e.g., $\sigma_v = 0$) leads to poorer performance. This trend holds across different network depths, with deeper TAGI-HRC architectures benefiting even more from a larger $\sigma_v$. This finding underscores the importance of tuning $\sigma_v$ to enhance TAGI-HRC's representational capability and stability.
+
+TAGI-Remax experiments mirrored these findings. The same upward trend in performance with increasing $\sigma_v$ values was observed, reinforcing the importance of this parameter for both implementations.
+
+% FIGURE: TAGI Performance by sigma_v
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\linewidth]{Figures/tagi_sigma_comparison.png}
+\caption{Impact of $\sigma_v$ on TAGI Performance across Different Network Depths. Higher $\sigma_v$ values consistently improve test error rates, especially in deeper networks.}
+\label{fig:tagi_sigma}
+\end{figure}
+
+\subsection{Impact of Network Size (Neurons/Channels)}
+In fully-connected neural networks (FNNs), increasing the number of neurons per layer benefited TAGI-HRC more than Torch. TAGI-HRC seemed to leverage the additional network capacity effectively, reducing test error as network width grew. By contrast, Torch did not show significant improvement when neurons per layer increased, suggesting a possible limitation in how it explores the representational capacity of larger networks. Similar trends were noted with CNNs when increasing the number of channels, reinforcing the notion that TAGI-HRC may inherently avoid overfitting and achieve better generalization with larger models.
+
+TAGI-Remax followed a similar pattern in FNNs: increasing the number of neurons per layer led to better performance. However, in CNNs, increasing the number of channels did not improve results for TAGI-Remax and even led to worse performance. This discrepancy highlights that while TAGI-Remax retains many of the advantageous characteristics of TAGI-HRC, certain architectural expansions may not universally improve its outcomes.
+
+% Impact of Network Size (Neurons per Layer)
+\begin{table}[h]
+\centering
+\caption{FNN Test Error (\%) by Neurons per Layer (Averaged across Layers)}
+\label{tab:fnn_neurons_impact}
+\begin{small}
+\begin{tabular}{lcc}
+\toprule
+ & Small (32) & Large (512) \\
+Framework & Neurons/layer & Neurons/layer \\
+\midrule
+Torch      & 7.03 &  7.32 \\
+TAGI-HRC   & 13.58         &  \textbf{8.98} \\
+TAGI-Remax &  9.25         &  \textbf{6.91} \\
+\bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+% Impact of Network Size (Channels per Layer)
+\begin{table}[h]
+\centering
+\caption{CNN Test Error (\%) by Initial Channels per Layer (Averaged)}
+\label{tab:cnn_channels_impact}
+\begin{small}
+\begin{tabular}{lcc}
+\toprule
+ & Small (8) & Large (32) \\
+Framework & Channels/layer & Channels/layer \\
+\midrule
+Torch      & 8.79 & 16.13 \\
+TAGI-HRC   &  6.29         &  \textbf{5.61} \\
+TAGI-Remax &  \textbf{5.46}         &  9.81 \\
+\bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+\subsection{Training Time Considerations}
+While TAGI-HRC outperformed Torch in several qualitative aspects, it was generally more computationally expensive, especially as network depth increased. The training time for TAGI-HRC seemed to grow more rapidly than for Torch. In certain scenarios, Torch’s faster (but sometimes less effective) training made it a more practical choice, especially when architectural complexity was moderate and batch normalization was used to stabilize training. Also, Torch experiments with CNNs without batch normalization were stopped early, explaining the longer training time for three layers compared to five.
+
+TAGI-Remax followed a similar trend. Although it often converged reliably, the computational overhead remained considerable. Its training time scaled in a manner similar to that of TAGI-HRC, suggesting that while stable and effective, both TAGI-HRC and TAGI-Remax incur higher computational costs than Torch as models grow in complexity.
+
+% Training Time and Test Error by Number of Layers
+\begin{table}[h]
+\centering
+\caption{Training Time (minutes) vs. Test Error (\%) by Number of Layers}
+\label{tab:training_time}
+\begin{small}
+\begin{tabular}{lcccccc}
+\toprule
+Layers & \multicolumn{2}{c}{Torch} & \multicolumn{2}{c}{TAGI-HRC} & \multicolumn{2}{c}{TAGI-Remax} \\
+ & Time & Err & Time & Err & Time & Err \\
+\midrule
+1 & 4.5 & 4.3 & 5.7 & 8.9 & 5.6 & 4.9 \\
+3 & 5.6 & 3.0 & 6.6 & 3.4 & 6.5 & 4.1 \\
+5 & 5.2 & 24.8 & \textbf{\textcolor{red}{16.4}} & 10.9 & \textbf{\textcolor{red}{13.0}} & 14.3 \\
+\bottomrule
+\end{tabular}
+\end{small}
+\end{table}
+
+\subsection{Summary of Key Insights}
+In summary, the TAGI framework provides a more robust learning mechanism across various dimensions—batch sizes, network depths, batch normalization, and network widths—resulting in lower test errors compared to Torch. However, these improvements often come at a higher computational cost. Additionally, the choice of $\sigma_v$ in TAGI can significantly influence performance, suggesting the importance of careful hyperparameter selection. Similarly, TAGI-Remax maintains these benefits and converges reliably, but does not consistently achieve the lowest possible error rates. It shares many of TAGI-HRC’s characteristics, including sensitivity to $\sigma_v$ and lower batch sizes, as well as improved performance with wider FNNs, but may not gain from wider CNNs. In contrast, Torch implementations benefit greatly from architectural and training heuristics like batch normalization and larger batch sizes, yet display notable limitations when confronted with deeper networks and smaller batch sizes.
+
+
+
+
+
+
+
+
+
 \section{Electronic Submission}
 \label{submission}
 
