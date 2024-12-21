@@ -1,0 +1,89 @@
+\begin{thebibliography}{15}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Blundell et~al.(2015)Blundell, Cornebise, Kavukcuoglu, and Wierstra]{blundell15}
+Blundell, C., Cornebise, J., Kavukcuoglu, K., and Wierstra, D.
+\newblock Weight uncertainty in neural network.
+\newblock In Bach, F. and Blei, D. (eds.), \emph{Proceedings of the 32nd International Conference on Machine Learning}, volume~37 of \emph{Proceedings of Machine Learning Research}, pp.\  1613--1622, Lille, France, 07--09 Jul 2015. PMLR.
+\newblock URL \url{https://proceedings.mlr.press/v37/blundell15.html}.
+
+\bibitem[Duda et~al.(2000)Duda, Hart, and Stork]{DudaHart2nd}
+Duda, R.~O., Hart, P.~E., and Stork, D.~G.
+\newblock \emph{Pattern Classification}.
+\newblock John Wiley and Sons, 2nd edition, 2000.
+
+\bibitem[Gal \& Ghahramani(2016)Gal and Ghahramani]{gal16}
+Gal, Y. and Ghahramani, Z.
+\newblock Dropout as a bayesian approximation: Representing model uncertainty in deep learning.
+\newblock In Balcan, M.~F. and Weinberger, K.~Q. (eds.), \emph{Proceedings of The 33rd International Conference on Machine Learning}, volume~48 of \emph{Proceedings of Machine Learning Research}, pp.\  1050--1059, New York, New York, USA, 20--22 Jun 2016. PMLR.
+\newblock URL \url{https://proceedings.mlr.press/v48/gal16.html}.
+
+\bibitem[Goulet et~al.(2021)Goulet, Nguyen, and Amiri]{goulet2020tractable}
+Goulet, J.-A., Nguyen, L.~H., and Amiri, S.
+\newblock Tractable approximate gaussian inference for bayesian neural networks.
+\newblock \emph{Journal of Machine Learning Research}, 2021.
+
+\bibitem[Graves(2011)]{NIPS2011}
+Graves, A.
+\newblock Practical variational inference for neural networks.
+\newblock In Shawe-Taylor, J., Zemel, R., Bartlett, P., Pereira, F., and Weinberger, K. (eds.), \emph{Advances in Neural Information Processing Systems}, volume~24. Curran Associates, Inc., 2011.
+\newblock URL \url{https://proceedings.neurips.cc/paper_files/paper/2011/file/7eb3c8be3d411e8ebfab08eba5f49632-Paper.pdf}.
+
+\bibitem[Hobbhahn et~al.(2022)Hobbhahn, Kristiadi, and Hennig]{hobbhahn22a}
+Hobbhahn, M., Kristiadi, A., and Hennig, P.
+\newblock Fast predictive uncertainty for classification with bayesian deep networks.
+\newblock In Cussens, J. and Zhang, K. (eds.), \emph{Proceedings of the Thirty-Eighth Conference on Uncertainty in Artificial Intelligence}, volume 180 of \emph{Proceedings of Machine Learning Research}, pp.\  822--832. PMLR, 01--05 Aug 2022.
+\newblock URL \url{https://proceedings.mlr.press/v180/hobbhahn22a.html}.
+
+\bibitem[Kearns(1989)]{kearns89}
+Kearns, M.~J.
+\newblock \emph{Computational Complexity of Machine Learning}.
+\newblock PhD thesis, Department of Computer Science, Harvard University, 1989.
+
+\bibitem[Lakshminarayanan et~al.(2017)Lakshminarayanan, Pritzel, and Blundell]{NIPS2017}
+Lakshminarayanan, B., Pritzel, A., and Blundell, C.
+\newblock Simple and scalable predictive uncertainty estimation using deep ensembles.
+\newblock In Guyon, I., Luxburg, U.~V., Bengio, S., Wallach, H., Fergus, R., Vishwanathan, S., and Garnett, R. (eds.), \emph{Advances in Neural Information Processing Systems}, volume~30. Curran Associates, Inc., 2017.
+\newblock URL \url{https://proceedings.neurips.cc/paper_files/paper/2017/file/9ef2ed4b7fd2c810847ffa5fa85bce38-Paper.pdf}.
+
+\bibitem[Langley(2000)]{langley00}
+Langley, P.
+\newblock Crafting papers on machine learning.
+\newblock In Langley, P. (ed.), \emph{Proceedings of the 17th International Conference on Machine Learning (ICML 2000)}, pp.\  1207--1216, Stanford, CA, 2000. Morgan Kaufmann.
+
+\bibitem[Michalski et~al.(1983)Michalski, Carbonell, and Mitchell]{MachineLearningI}
+Michalski, R.~S., Carbonell, J.~G., and Mitchell, T.~M. (eds.).
+\newblock \emph{Machine Learning: An Artificial Intelligence Approach, Vol. I}.
+\newblock Tioga, Palo Alto, CA, 1983.
+
+\bibitem[Mitchell(1980)]{mitchell80}
+Mitchell, T.~M.
+\newblock The need for biases in learning generalizations.
+\newblock Technical report, Computer Science Department, Rutgers University, New Brunswick, MA, 1980.
+
+\bibitem[Neal(2012)]{neal12}
+Neal, R.~M.
+\newblock Mcmc using hamiltonian dynamics.
+\newblock \emph{arXiv preprint arXiv:1206.1901}, 2012.
+
+\bibitem[Newell \& Rosenbloom(1981)Newell and Rosenbloom]{Newell81}
+Newell, A. and Rosenbloom, P.~S.
+\newblock Mechanisms of skill acquisition and the law of practice.
+\newblock In Anderson, J.~R. (ed.), \emph{Cognitive Skills and Their Acquisition}, chapter~1, pp.\  1--51. Lawrence Erlbaum Associates, Inc., Hillsdale, NJ, 1981.
+
+\bibitem[Samuel(1959)]{Samuel59}
+Samuel, A.~L.
+\newblock Some studies in machine learning using the game of checkers.
+\newblock \emph{IBM Journal of Research and Development}, 3\penalty0 (3):\penalty0 211--229, 1959.
+
+\bibitem[Welling \& Teh(2011)Welling and Teh]{well11}
+Welling, M. and Teh, Y.~W.
+\newblock Bayesian learning via stochastic gradient langevin dynamics.
+\newblock In Getoor, L. and Scheffer, T. (eds.), \emph{ICML}, pp.\  681--688. Omnipress, 2011.
+\newblock URL \url{http://dblp.uni-trier.de/db/conf/icml/icml2011.html#WellingT11}.
+
+\end{thebibliography}

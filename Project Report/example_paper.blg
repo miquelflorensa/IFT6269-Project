@@ -1,48 +1,54 @@
 This is BibTeX, Version 0.99d (TeX Live 2023)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: example_paper.aux
-I found no \citation commands---while reading file example_paper.aux
-I found no \bibdata command---while reading file example_paper.aux
-I found no \bibstyle command---while reading file example_paper.aux
-You've used 0 entries,
-            0 wiz_defined-function locations,
-            83 strings with 500 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
-int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
-purify$ -- 0
+The style file: icml2018.bst
+Database file #1: example_paper.bib
+A bad cross reference---entry "well11"
+refers to entry "conf/icml/2011", which doesn't exist
+Warning--I didn't find a database entry for "lecun2015deep"
+Warning--I didn't find a database entry for "kendall2017uncertainties"
+Warning--I didn't find a database entry for ""
+Warning--I didn't find a database entry for "lakshminarayanan17"
+Warning--I didn't find a database entry for "conf/icml/2011"
+You've used 15 entries,
+            2773 wiz_defined-function locations,
+            715 strings with 8142 characters,
+and the built_in function-call counts, 7555 in all, are:
+= -- 689
+> -- 393
+< -- 21
++ -- 130
+- -- 115
+* -- 584
+:= -- 1152
+add.period$ -- 59
+call.type$ -- 15
+change.case$ -- 75
+chr.to.int$ -- 15
+cite$ -- 30
+duplicate$ -- 382
+empty$ -- 630
+format.name$ -- 136
+if$ -- 1636
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 14
+newline$ -- 89
+num.names$ -- 77
+pop$ -- 157
+preamble$ -- 1
+purify$ -- 61
 quote$ -- 0
-skip$ -- 0
+skip$ -- 285
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 254
+swap$ -- 86
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
+type$ -- 155
 warning$ -- 0
-while$ -- 0
+while$ -- 72
 width$ -- 0
-write$ -- 0
-(There were 3 error messages)
+write$ -- 228
+(There was 1 error message)

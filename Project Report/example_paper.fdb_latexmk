@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex example_paper"] 1734800024 "example_paper.aux" "example_paper.bbl" "example_paper" 1734800024 2
+["bibtex example_paper"] 1734800073 "example_paper.aux" "example_paper.bbl" "example_paper" 1734800073 2
   "./example_paper.bib" 1734754069 9340 33e2b0c4d1bc2f2f3179c2f550c7e1af ""
   "./icml2018.bst" 1733863796 27147 11970ec9d69705ed6a2b168055aaee45 ""
-  "example_paper.aux" 1734800024 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "example_paper.aux" 1734800073 4071 3bf61ba5c1855edc82172959500dbbfb "pdflatex"
   (generated)
   "example_paper.bbl"
   "example_paper.blg"
   (rewritten before read)
-["pdflatex"] 1734800009 "/Users/miquelflorensa/Documents/IFT6269/IFT6269-Project/Project Report/example_paper.tex" "example_paper.pdf" "example_paper" 1734800011 0
+["pdflatex"] 1734800071 "/Users/miquelflorensa/Documents/IFT6269/IFT6269-Project/Project Report/example_paper.tex" "example_paper.pdf" "example_paper" 1734800073 0
   "/Users/miquelflorensa/Documents/IFT6269/IFT6269-Project/Project Report/example_paper.tex" 1734800007 54865 1e0191ba14c734e3fc2276891ca855b6 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -246,9 +246,9 @@
   "Figures/update-TAGI.tex" 1733945316 2621 ce5e48b8d93aee3d4ea21b1c6d6d5d22 ""
   "algorithm.sty" 1733863796 2223 ada3eaa0c1bd465a639433dfafc2fc4e ""
   "algorithmic.sty" 1733863796 7414 ce084815cf0aab483787dbc4bf2ace9c ""
-  "example_paper.aux" 1734800024 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
-  "example_paper.bbl" 1734800024 0 d41d8cd98f00b204e9800998ecf8427e "bibtex example_paper"
-  "example_paper.out" 0 -1 0 "pdflatex"
+  "example_paper.aux" 1734800073 4071 3bf61ba5c1855edc82172959500dbbfb "pdflatex"
+  "example_paper.bbl" 1734800073 5245 068cc44fe1433d0b14e0410e48bc906b "bibtex example_paper"
+  "example_paper.out" 1734800072 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   "example_paper.tex" 1734800007 54865 1e0191ba14c734e3fc2276891ca855b6 ""
   "fancyhdr.sty" 1733863796 20521 e5d13d98d57bd53d4fed3aa61bd29c86 ""
   "icml2018_ift6269.sty" 1733863796 27045 b229181fdc7a2297c396441524a164c9 ""
